@@ -1,0 +1,25 @@
+.matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  animation: fadeInMatrix 1.5s ease forwards;
+}
+
+@keyframes fadeInMatrix {
+  from { opacity: 0; }
+  to { opacity: 0.6; } /* Semi-transparent so background is still visible */
+}
+
+.matrix-canvas.fade-out {
+  animation: fadeOutMatrix 1.5s ease forwards;
+}
+
+@keyframes fadeOutMatrix {
+  from { opacity: 0.6; }
+  to { opacity: 0; }
+}

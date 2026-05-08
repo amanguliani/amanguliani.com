@@ -144,7 +144,7 @@
 }
 
 .suggestion-item {
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -156,13 +156,13 @@
 }
 
 .suggestion-item:hover {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--primary-color);
+  background: rgba(59, 130, 246, 0.08);
 }
 
 .suggestion-item.disabled {
   cursor: default;
   color: var(--text-secondary);
+  padding: 1rem 1.5rem;
 }
 
 .suggestion-item.disabled:hover {
@@ -170,10 +170,35 @@
   color: var(--text-secondary);
 }
 
-.suggestion-icon {
-  color: var(--text-secondary);
+.suggestion-emoji {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
 }
 
-.suggestion-item:hover .suggestion-icon {
+.suggestion-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.suggestion-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-item:hover .suggestion-label {
   color: var(--primary-color);
+}
+
+.suggestion-category {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 400;
 }

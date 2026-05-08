@@ -9,16 +9,22 @@ import MatrixRain from './components/MatrixRain';
 import Connect from './components/Connect';
 import BullsEye from './components/BullsEye';
 import About from './components/About';
+import Photos from './components/Photos';
+import { searchContent } from './searchIndex';
+import type { SearchEntry } from './searchIndex';
 
-const COMMANDS = ['about me', 'resume', 'connect with me', 'play my fav word game', 'clear'];
+
+
+type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'photos' | null;
 
 function App() {
   const [inputValue, setInputValue] = useState('');
-  const [activeComponent, setActiveComponent] = useState<'resume' | 'connect' | 'bullseye' | 'about' | null>(null);
+  const [activeComponent, setActiveComponent] = useState<ActiveComponent>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [avatarClicks, setAvatarClicks] = useState(0);
   const [matrixState, setMatrixState] = useState<'inactive' | 'active' | 'fading'>('inactive');
+  const [searchResults, setSearchResults] = useState<SearchEntry[]>([]);
 
   useEffect(() => {
     if (avatarClicks > 0 && avatarClicks < 10) {
@@ -29,37 +35,55 @@ function App() {
 
   useEffect(() => {
     if (matrixState === 'active') {
-      const timer = setTimeout(() => setMatrixState('fading'), 5000); // Wait 5s before fading
+      const timer = setTimeout(() => setMatrixState('fading'), 5000);
       return () => clearTimeout(timer);
     } else if (matrixState === 'fading') {
-      const timer = setTimeout(() => setMatrixState('inactive'), 1500); // 1.5s fade out duration
+      const timer = setTimeout(() => setMatrixState('inactive'), 1500);
       return () => clearTimeout(timer);
     }
   }, [matrixState]);
+
+  // Update search results when input changes
+  useEffect(() => {
+    if (inputValue.trim()) {
+      setSearchResults(searchContent(inputValue));
+    } else {
+      setSearchResults([]);
+    }
+  }, [inputValue]);
+
+  const navigateTo = (route: ActiveComponent) => {
+    setActiveComponent(route);
+    setErrorMsg('');
+  };
 
   const handleCommand = (cmdStr: string) => {
     const command = cmdStr.toLowerCase().trim();
     setInputValue(cmdStr);
 
-    if (command.includes('about') || command.includes('about me') || command.includes('who am i') || command.includes('who are you')) {
-      setActiveComponent('about');
-      setErrorMsg('');
+    if (command.includes('about') || command.includes('who am i') || command.includes('who are you')) {
+      navigateTo('about');
     } else if (command.includes('resume') || command.includes('experience')) {
-      setActiveComponent('resume');
-      setErrorMsg('');
-    } else if (command.includes('connect with me') || command.includes('contact') || command.includes('social') || command.includes('hi') || command.includes('hello')) {
-      setActiveComponent('connect');
-      setErrorMsg('');
-    } else if (command.includes('bulls eye') || command.includes('bullseye') || command.includes('game') || command.includes('play') || command.includes('play my fav word game')) {
-      setActiveComponent('bullseye');
-      setErrorMsg('');
+      navigateTo('resume');
+    } else if (command.includes('connect') || command.includes('contact') || command.includes('social') || command.includes('hi') || command.includes('hello') || command.includes('email')) {
+      navigateTo('connect');
+    } else if (command.includes('bulls eye') || command.includes('bullseye') || command.includes('game') || command.includes('play')) {
+      navigateTo('bullseye');
+    } else if (command.includes('photo') || command.includes('gallery') || command.includes('picture') || command.includes('image')) {
+      navigateTo('photos');
     } else if (command === 'clear' || command === '') {
       setActiveComponent(null);
       setErrorMsg('');
     } else {
       setActiveComponent(null);
-      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "resume", "connect with me", or "play game".`);
+      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "resume", "connect", "photos", or "play game".`);
     }
+  };
+
+  const handleSearchSelect = (entry: SearchEntry) => {
+    navigateTo(entry.route);
+    setInputValue(entry.label);
+    setShowSuggestions(false);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -111,31 +135,35 @@ function App() {
           </form>
           {showSuggestions && inputValue && (
             <div className="suggestions-dropdown glass-panel animate-fade-in">
-              {COMMANDS.filter(c => c.includes(inputValue.toLowerCase())).map((cmd, idx) => (
-                <div
-                  key={idx}
-                  className="suggestion-item"
-                  onClick={() => {
-                    handleCommand(cmd);
-                    setShowSuggestions(false);
-                  }}
-                >
-                  <Search size={14} className="suggestion-icon" />
-                  {cmd}
-                </div>
-              ))}
-              {COMMANDS.filter(c => c.includes(inputValue.toLowerCase())).length === 0 && (
-                <div className="suggestion-item disabled">No matching commands</div>
+              {searchResults.length > 0 ? (
+                <>
+                  {searchResults.map((result, idx) => (
+                    <div
+                      key={idx}
+                      className="suggestion-item"
+                      onClick={() => handleSearchSelect(result)}
+                    >
+                      <span className="suggestion-emoji">{result.icon}</span>
+                      <div className="suggestion-text">
+                        <span className="suggestion-label">{result.label}</span>
+                        <span className="suggestion-category">{result.category}</span>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="suggestion-item disabled">No matching results</div>
               )}
             </div>
           )}
         </div>
         {!activeComponent && !errorMsg && (
           <p className="search-hints">
-            Try: <span onClick={() => { setInputValue('about me'); setActiveComponent('about'); }}>About Aman</span>,
-            <span onClick={() => { setInputValue('resume'); setActiveComponent('resume'); }}> Resume</span>,
-            <span onClick={() => { setInputValue('connect with me'); setActiveComponent('connect'); }}> Connect with me</span>,
-            <span onClick={() => { setInputValue('play my fav word game'); setActiveComponent('bullseye'); }}> Play a game</span>
+            Try: <span onClick={() => { setInputValue('about me'); navigateTo('about'); }}>About Aman</span>,
+            <span onClick={() => { setInputValue('resume'); navigateTo('resume'); }}> Resume</span>,
+            <span onClick={() => { setInputValue('connect with me'); navigateTo('connect'); }}> Connect</span>,
+            <span onClick={() => { setInputValue('photos'); navigateTo('photos'); }}> Photos</span>,
+            <span onClick={() => { setInputValue('play my fav word game'); navigateTo('bullseye'); }}> Play a game</span>
           </p>
         )}
         {errorMsg && <p className="error-text">{errorMsg}</p>}
@@ -153,6 +181,9 @@ function App() {
         </div>
         <div style={{ display: activeComponent === 'bullseye' ? 'block' : 'none', width: '100%' }}>
           <BullsEye />
+        </div>
+        <div style={{ display: activeComponent === 'photos' ? 'block' : 'none', width: '100%' }}>
+          <Photos />
         </div>
       </div>
     </div>

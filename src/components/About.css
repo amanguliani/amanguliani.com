@@ -1,33 +1,101 @@
 .about-container {
   padding: 1rem;
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .about-header {
-  margin-bottom: 1.5rem;
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 .about-header h2 {
   font-size: 2rem;
-  margin-bottom: 0.5rem;
 }
 
 .about-content {
-  padding: 2rem;
+  padding: 2rem 2.5rem;
   line-height: 1.8;
-  font-size: 1.15rem;
+}
+
+.about-greeting {
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
   color: var(--text-primary);
-  text-align: center;
 }
 
-.about-content p {
-  margin: 0;
+.about-greeting strong {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
-.about-content .highlight-text {
-  color: var(--primary-color);
+.about-bio {
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.about-bio em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Blue pill highlights for key phrases */
+.highlight {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
   font-weight: 600;
+}
+
+/* Purple accent for tech/AI terms */
+.highlight-accent {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Warm amber for values */
+.highlight-warm {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Interest tags */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+
+.tag {
+  background: var(--surface-color);
+  border: 1px solid var(--surface-border);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.tag:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  color: var(--primary-color);
+  background: rgba(59, 130, 246, 0.05);
+  transform: translateY(-2px);
 }

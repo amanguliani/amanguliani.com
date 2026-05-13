@@ -13,6 +13,7 @@ import Photos from './components/Photos';
 import Astrology from './components/Astrology';
 import { searchContent } from './searchIndex';
 import type { SearchEntry } from './searchIndex';
+import { getRandomFunnyFact } from './funnyFacts';
 
 
 
@@ -30,18 +31,6 @@ function App() {
   const [matrixState, setMatrixState] = useState<'inactive' | 'active' | 'fading'>('inactive');
   const [searchResults, setSearchResults] = useState<SearchEntry[]>([]);
 
-  const funnyFacts = [
-    "\u{1F914} That's classified intel\u2026 but rumor has it Aman once debugged a prod issue in his sleep.",
-    "\u{1F575}\uFE0F Personal facts? Aman's favorite design pattern is 'works on my machine'.",
-    "\u{1F604} Fun fact: Aman taught Python to kids \u2014 and they taught him patience.",
-    "\u{1F9E0} Aman's brain runs on two threads: one for code, one for coffee.",
-    "\u{1F3AF} You're asking the wrong questions\u2026 the real question is: can you beat Aman at Bulls Eye?",
-    "\u{1F32E} Sources confirm Aman believes tacos are a valid dinner for every night of the week.",
-    "\u26A1 Aman once shipped a feature so fast, CI/CD asked him to slow down.",
-    "\u{1F3B8} Legend says Aman's commit messages are more poetic than most song lyrics.",
-  ];
-
-  const getRandomFunnyFact = () => funnyFacts[Math.floor(Math.random() * funnyFacts.length)];
 
   useEffect(() => {
     if (avatarClicks > 0 && avatarClicks < 10) {

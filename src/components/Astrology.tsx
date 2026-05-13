@@ -43,6 +43,7 @@ const TAROT_EMOJI_MAP: Record<string, string> = {
   'The World': '🌍',
 };
 
+// Proxied in dev by Vite, in prod by Netlify _redirects
 const API_BASE = '/horoscope-api/api/v1';
 
 // ── API types ──

@@ -5,7 +5,7 @@ export interface SearchEntry {
   text: string;       // searchable content (lowercased internally)
   label: string;      // what to display in the dropdown
   category: string;   // e.g. "About", "Resume", "Photos"
-  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'photos';
+  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'photos' | 'astrology';
   icon: string;       // emoji to display
 }
 
@@ -40,6 +40,19 @@ export const SEARCH_INDEX: SearchEntry[] = [
 
   // Photos content
   { text: 'photos gallery pictures images memories', label: 'Photo Gallery', category: 'Photos', route: 'photos', icon: '📸' },
+
+  // Personal facts (funny responses)
+  { text: 'favorite food hobby hobbies personal fun fact', label: 'Ask a Personal Question', category: 'Fun', route: 'about', icon: '😄' },
+  { text: 'age birthday how old born family', label: 'Personal Facts about Aman', category: 'Fun', route: 'about', icon: '🎂' },
+
+  // Easter egg hints
+  { text: 'hint easter egg secret hidden surprise mystery', label: 'Is there an Easter Egg?', category: 'Mystery', route: 'about', icon: '🔮' },
+
+  // The Cosmic Oracle (secret astrology game)
+  { text: 'astrology horoscope tarot fortune cosmic oracle zodiac', label: 'The Cosmic Oracle', category: 'Mystery', route: 'astrology', icon: '🔮' },
+
+  // Palm reading
+  { text: 'palm reading read my palm palmistry', label: 'Palm Reading', category: 'Mystery', route: 'about', icon: '🤚' },
 ];
 
 /**

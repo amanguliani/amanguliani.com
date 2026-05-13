@@ -102,6 +102,120 @@
   animation: fadeIn 0.3s ease;
 }
 
+/* Funny personal-fact response */
+.funny-response {
+  margin-top: 1.5rem;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.08));
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  animation: fadeIn 0.4s ease, subtleBounce 0.6s ease;
+}
+
+.funny-response p {
+  margin: 0;
+}
+
+/* Ominous easter-egg hint response */
+.hint-response {
+  margin-top: 1.5rem;
+  max-width: 600px;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ede9fe, #e8e0ff);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #4c1d95;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.7;
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.12), inset 0 0 30px rgba(139, 92, 246, 0.05);
+  animation: fadeIn 0.5s ease, ominousGlow 3s ease-in-out infinite;
+}
+
+.hint-response p {
+  margin: 0;
+}
+
+@keyframes subtleBounce {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ominousGlow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(139, 92, 246, 0.12), inset 0 0 30px rgba(139, 92, 246, 0.05); }
+  50% { box-shadow: 0 4px 30px rgba(139, 92, 246, 0.22), inset 0 0 40px rgba(139, 92, 246, 0.08); }
+}
+
+/* Palm reading card */
+.palm-reading-card {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.palm-hand-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(88, 28, 135, 0.12), rgba(139, 92, 246, 0.08));
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), inset 0 0 20px rgba(139, 92, 246, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  animation: palmFloat 3s ease-in-out infinite, palmGlow 3s ease-in-out infinite;
+}
+
+.palm-hand-link:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 50px rgba(139, 92, 246, 0.4), inset 0 0 30px rgba(139, 92, 246, 0.1);
+  border-color: rgba(168, 85, 247, 0.6);
+}
+
+.palm-hand-emoji {
+  font-size: 4.5rem;
+  filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.4));
+  transition: filter 0.3s ease;
+}
+
+.palm-hand-link:hover .palm-hand-emoji {
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.6));
+}
+
+.palm-reading-text {
+  font-size: 1.05rem;
+  color: #a78bfa;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  text-align: center;
+  animation: fadeIn 0.6s ease 0.3s both;
+}
+
+@keyframes palmFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes palmGlow {
+  0%, 100% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), inset 0 0 20px rgba(139, 92, 246, 0.05); }
+  50% { box-shadow: 0 0 45px rgba(139, 92, 246, 0.35), inset 0 0 30px rgba(139, 92, 246, 0.1); }
+}
+
 .search-hints {
   margin-top: 1.5rem;
   color: var(--text-secondary);

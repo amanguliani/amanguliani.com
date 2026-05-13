@@ -10,21 +10,38 @@ import Connect from './components/Connect';
 import BullsEye from './components/BullsEye';
 import About from './components/About';
 import Photos from './components/Photos';
+import Astrology from './components/Astrology';
 import { searchContent } from './searchIndex';
 import type { SearchEntry } from './searchIndex';
 
 
 
-type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'photos' | null;
+type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'photos' | 'astrology' | null;
 
 function App() {
   const [inputValue, setInputValue] = useState('');
   const [activeComponent, setActiveComponent] = useState<ActiveComponent>(null);
   const [errorMsg, setErrorMsg] = useState('');
+  const [funnyMsg, setFunnyMsg] = useState('');
+  const [hintMsg, setHintMsg] = useState('');
+  const [showPalmReading, setShowPalmReading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [avatarClicks, setAvatarClicks] = useState(0);
   const [matrixState, setMatrixState] = useState<'inactive' | 'active' | 'fading'>('inactive');
   const [searchResults, setSearchResults] = useState<SearchEntry[]>([]);
+
+  const funnyFacts = [
+    "\u{1F914} That's classified intel\u2026 but rumor has it Aman once debugged a prod issue in his sleep.",
+    "\u{1F575}\uFE0F Personal facts? Aman's favorite design pattern is 'works on my machine'.",
+    "\u{1F604} Fun fact: Aman taught Python to kids \u2014 and they taught him patience.",
+    "\u{1F9E0} Aman's brain runs on two threads: one for code, one for coffee.",
+    "\u{1F3AF} You're asking the wrong questions\u2026 the real question is: can you beat Aman at Bulls Eye?",
+    "\u{1F32E} Sources confirm Aman believes tacos are a valid dinner for every night of the week.",
+    "\u26A1 Aman once shipped a feature so fast, CI/CD asked him to slow down.",
+    "\u{1F3B8} Legend says Aman's commit messages are more poetic than most song lyrics.",
+  ];
+
+  const getRandomFunnyFact = () => funnyFacts[Math.floor(Math.random() * funnyFacts.length)];
 
   useEffect(() => {
     if (avatarClicks > 0 && avatarClicks < 10) {
@@ -55,13 +72,55 @@ function App() {
   const navigateTo = (route: ActiveComponent) => {
     setActiveComponent(route);
     setErrorMsg('');
+    setFunnyMsg('');
+    setHintMsg('');
+    setShowPalmReading(false);
   };
 
   const handleCommand = (cmdStr: string) => {
     const command = cmdStr.toLowerCase().trim();
     setInputValue(cmdStr);
 
-    if (command.includes('about') || command.includes('who am i') || command.includes('who are you')) {
+    const personalKeywords = ['age', 'old are you', 'birthday', 'favorite', 'favourite', 'hobby', 'hobbies',
+      'married', 'wife', 'girlfriend', 'boyfriend', 'single', 'relationship',
+      'height', 'tall', 'weight', 'pet', 'dog', 'cat', 'food', 'color', 'colour', 'music',
+      'movie', 'book', 'personal', 'fun fact', 'tell me something', 'interesting about',
+      'what do you like', 'what does aman like', 'how old', 'where are you from', 'where do you live',
+      'hometown', 'born', 'family'];
+    const isPersonalQ = personalKeywords.some(kw => command.includes(kw));
+
+    const hintKeywords = ['hint', 'easter egg', 'secret', 'hidden', 'surprise', 'mystery', 'cheat', 'trick',
+      'unlock', 'special', 'bonus'];
+    const isHintQ = hintKeywords.some(kw => command.includes(kw));
+
+    // Palm reading → show hand link
+    const isPalmQ = command.includes('palm reading') || command.includes('palm') || command.includes('read my palm');
+
+    // Secret astrology game
+    const astroKeywords = ['astrology', 'horoscope', 'tarot', 'fortune', 'cosmic', 'oracle'];
+    const isAstroQ = astroKeywords.some(kw => command.includes(kw));
+
+    if (isPalmQ) {
+      setActiveComponent(null);
+      setErrorMsg('');
+      setFunnyMsg('');
+      setHintMsg('');
+      setShowPalmReading(true);
+    } else if (isAstroQ) {
+      navigateTo('astrology');
+    } else if (isPersonalQ) {
+      setActiveComponent(null);
+      setErrorMsg('');
+      setHintMsg('');
+      setShowPalmReading(false);
+      setFunnyMsg(getRandomFunnyFact());
+    } else if (isHintQ) {
+      setActiveComponent(null);
+      setErrorMsg('');
+      setFunnyMsg('');
+      setShowPalmReading(false);
+      setHintMsg('\u{1F52E} The oracle speaks\u2026 "Click on my avatar 10 times you shall, and a prize you\'ll receive." But beware \u2014 only the swift and persistent shall be rewarded. The window of fate is\u2026 brief. \u23F3');
+    } else if (command.includes('about') || command.includes('who am i') || command.includes('who are you')) {
       navigateTo('about');
     } else if (command.includes('resume') || command.includes('experience')) {
       navigateTo('resume');
@@ -74,15 +133,20 @@ function App() {
     } else if (command === 'clear' || command === '') {
       setActiveComponent(null);
       setErrorMsg('');
+      setFunnyMsg('');
+      setHintMsg('');
+      setShowPalmReading(false);
     } else {
       setActiveComponent(null);
+      setFunnyMsg('');
+      setHintMsg('');
+      setShowPalmReading(false);
       setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "resume", "connect", "photos", or "play game".`);
     }
   };
 
   const handleSearchSelect = (entry: SearchEntry) => {
-    navigateTo(entry.route);
-    setInputValue(entry.label);
+    handleCommand(entry.label);
     setShowSuggestions(false);
   };
 
@@ -113,6 +177,9 @@ function App() {
               setActiveComponent(null);
               setInputValue('');
               setErrorMsg('');
+              setFunnyMsg('');
+              setHintMsg('');
+              setShowPalmReading(false);
             }
           }}
         />
@@ -166,6 +233,29 @@ function App() {
             <span onClick={() => { setInputValue('play my fav word game'); navigateTo('bullseye'); }}> Play a game</span>
           </p>
         )}
+        {showPalmReading && (
+          <div className="palm-reading-card animate-fade-in">
+            <a
+              href="https://opal.google/app/1pAcPtP6LYezie5A6hbN9vYKW4kgG7XiA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="palm-hand-link"
+            >
+              <span className="palm-hand-emoji">🤚</span>
+            </a>
+            <p className="palm-reading-text">Touch the palm to reveal your fate…</p>
+          </div>
+        )}
+        {funnyMsg && (
+          <div className="funny-response animate-fade-in">
+            <p>{funnyMsg}</p>
+          </div>
+        )}
+        {hintMsg && (
+          <div className="hint-response animate-fade-in">
+            <p>{hintMsg}</p>
+          </div>
+        )}
         {errorMsg && <p className="error-text">{errorMsg}</p>}
       </div>
 
@@ -184,6 +274,9 @@ function App() {
         </div>
         <div style={{ display: activeComponent === 'photos' ? 'block' : 'none', width: '100%' }}>
           <Photos />
+        </div>
+        <div style={{ display: activeComponent === 'astrology' ? 'block' : 'none', width: '100%' }}>
+          <Astrology />
         </div>
       </div>
     </div>

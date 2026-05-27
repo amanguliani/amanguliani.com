@@ -5,7 +5,7 @@ export interface SearchEntry {
   text: string;       // searchable content (lowercased internally)
   label: string;      // what to display in the dropdown
   category: string;   // e.g. "About", "Resume", "Photos"
-  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'photos' | 'astrology';
+  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'photos' | 'astrology' | 'photobook';
   icon: string;       // emoji to display
 }
 
@@ -16,6 +16,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'connect with me contact social email', label: 'Connect with Me', category: 'Navigation', route: 'connect', icon: '🤝' },
   { text: 'play my fav word game bulls eye bullseye', label: 'Play Bulls Eye', category: 'Navigation', route: 'bullseye', icon: '🎯' },
   { text: 'photos gallery pictures images', label: 'Photo Gallery', category: 'Navigation', route: 'photos', icon: '📸' },
+  { text: 'riyan photobook dadi letters book story', label: 'Riyan\'s Photobook', category: 'Navigation', route: 'photobook', icon: '📖' },
 
   // About content
   { text: 'aman guliani senior engineering lead google', label: 'Senior Engineering Lead at Google', category: 'About', route: 'about', icon: '👤' },

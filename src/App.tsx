@@ -17,7 +17,7 @@ import { getRandomFunnyFact } from './funnyFacts';
 
 
 
-type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'photos' | 'astrology' | null;
+type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'photos' | 'astrology' | 'photobook' | null;
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -48,6 +48,15 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, [matrixState]);
+
+  // Handle direct url paths (deep linking)
+  useEffect(() => {
+    const path = window.location.pathname.replace(/\/$/, ''); // strip trailing slash
+    if (path === '/photobook' || path === '/riyan-photobook') {
+      setActiveComponent('photobook');
+      setInputValue('riyan photobook');
+    }
+  }, []);
 
   // Update search results when input changes
   useEffect(() => {
@@ -89,6 +98,8 @@ function App() {
     const astroKeywords = ['astrology', 'horoscope', 'tarot', 'fortune', 'cosmic', 'oracle'];
     const isAstroQ = astroKeywords.some(kw => command.includes(kw));
 
+    const isPhotobookQ = command.includes('riyan') || command.includes('photobook') || command.includes('dadi') || command === 'book';
+
     if (isPalmQ) {
       setActiveComponent(null);
       setErrorMsg('');
@@ -97,6 +108,8 @@ function App() {
       setShowPalmReading(true);
     } else if (isAstroQ) {
       navigateTo('astrology');
+    } else if (isPhotobookQ) {
+      navigateTo('photobook');
     } else if (isPersonalQ) {
       setActiveComponent(null);
       setErrorMsg('');
@@ -144,6 +157,54 @@ function App() {
     handleCommand(inputValue);
     setShowSuggestions(false);
   };
+
+  if (activeComponent === 'photobook') {
+    return (
+      <div className="photobook-full-page" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99999, background: '#FAF7F2' }}>
+        <button
+          onClick={() => {
+            setActiveComponent(null);
+            setInputValue('');
+          }}
+          style={{
+            position: 'fixed',
+            top: '20px',
+            left: '20px',
+            zIndex: 100000,
+            background: 'rgba(44, 36, 22, 0.85)',
+            color: '#FAF7F2',
+            border: 'none',
+            borderRadius: '30px',
+            padding: '10px 20px',
+            fontFamily: "'Jost', sans-serif",
+            fontSize: '14px',
+            fontWeight: 500,
+            cursor: 'pointer',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            transition: 'background 0.2s, transform 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(44, 36, 22, 1)';
+            e.currentTarget.style.transform = 'scale(1.05)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(44, 36, 22, 0.85)';
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          ← Back to Home
+        </button>
+        <iframe
+          src="/photobook/index.html"
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          title="Riyan's Photobook"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={`app-container ${matrixState !== 'inactive' ? 'matrix-active' : ''}`}>
@@ -219,6 +280,7 @@ function App() {
             <span onClick={() => { setInputValue('resume'); navigateTo('resume'); }}> Resume</span>,
             <span onClick={() => { setInputValue('connect with me'); navigateTo('connect'); }}> Connect</span>,
             <span onClick={() => { setInputValue('photos'); navigateTo('photos'); }}> Photos</span>,
+            <span onClick={() => { setInputValue('riyan photobook'); navigateTo('photobook'); }}> Riyan's Photobook</span>,
             <span onClick={() => { setInputValue('play my fav word game'); navigateTo('bullseye'); }}> Play a game</span>
           </p>
         )}

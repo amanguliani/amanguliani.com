@@ -139,7 +139,7 @@ function initializeEmailMetaHeaders() {
   document.querySelectorAll('.letter').forEach(letter => {
     const isIntro = letter.parentNode.classList.contains('introduction');
     const isCover = letter.parentNode.classList.contains('cover-page');
-    if (isCover) return; // Skip cover
+    if (isCover || isIntro) return; // Skip cover and introduction
 
     let dateEl = letter.querySelector('.letter-date') || letter.querySelector('.date');
     let dateText = '';
@@ -193,4 +193,21 @@ function initializeEmailMetaHeaders() {
 }
 
 // Trigger loading immediately
-window.addEventListener('DOMContentLoaded', loadPhotobook);
+window.addEventListener('DOMContentLoaded', () => {
+  loadPhotobook();
+
+  const backBtn = document.getElementById('back-home-btn');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      if (window.self !== window.top) {
+        if (window.parent && typeof window.parent.handleBackToHome === 'function') {
+          window.parent.handleBackToHome();
+        } else {
+          window.parent.postMessage('back-to-home', '*');
+        }
+      } else {
+        window.location.href = '/';
+      }
+    });
+  }
+});

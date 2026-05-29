@@ -58,6 +58,25 @@ function App() {
     }
   }, []);
 
+  // Expose function and handle postMessage from embedded photobook to navigate back home
+  useEffect(() => {
+    (window as any).handleBackToHome = () => {
+      setActiveComponent(null);
+      setInputValue('');
+    };
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data === 'back-to-home') {
+        setActiveComponent(null);
+        setInputValue('');
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => {
+      delete (window as any).handleBackToHome;
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
   // Update search results when input changes
   useEffect(() => {
     if (inputValue.trim()) {
@@ -161,42 +180,6 @@ function App() {
   if (activeComponent === 'photobook') {
     return (
       <div className="photobook-full-page" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99999, background: '#FAF7F2' }}>
-        <button
-          onClick={() => {
-            setActiveComponent(null);
-            setInputValue('');
-          }}
-          style={{
-            position: 'fixed',
-            top: '20px',
-            left: '20px',
-            zIndex: 100000,
-            background: 'rgba(44, 36, 22, 0.85)',
-            color: '#FAF7F2',
-            border: 'none',
-            borderRadius: '30px',
-            padding: '10px 20px',
-            fontFamily: "'Jost', sans-serif",
-            fontSize: '14px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            transition: 'background 0.2s, transform 0.2s'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(44, 36, 22, 1)';
-            e.currentTarget.style.transform = 'scale(1.05)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(44, 36, 22, 0.85)';
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
-        >
-          ← Back to Home
-        </button>
         <iframe
           src="/photobook/index.html"
           style={{ width: '100%', height: '100%', border: 'none' }}

@@ -77,8 +77,65 @@ async function loadPhotobook() {
 function initializePhotoLayouts() {
   document.querySelectorAll('.photos').forEach(photosContainer => {
     const images = Array.from(photosContainer.querySelectorAll('img'));
-    if (images.length >= 2) {
-      
+    if (images.length === 3) {
+      const apply3PhotoLayout = () => {
+        let landscapes = [];
+        let portraits = [];
+
+        images.forEach(img => {
+          const ratio = img.naturalHeight > 0 ? (img.naturalWidth / img.naturalHeight) : 1.0;
+          if (ratio >= 1.05) {
+            landscapes.push(img);
+          } else {
+            portraits.push(img);
+          }
+        });
+
+        let layoutClass = 'collage-3-stagger';
+        if (portraits.length === 3) {
+          layoutClass = 'collage-3-portraits';
+        } else if (landscapes.length === 3) {
+          layoutClass = 'collage-3-landscapes';
+          images[0].classList.add('collage-hero-landscape');
+        } else if (portraits.length === 1 && landscapes.length === 2) {
+          layoutClass = 'collage-3-p-ll';
+          portraits[0].classList.add('collage-hero-portrait');
+        } else if (portraits.length === 2 && landscapes.length === 1) {
+          layoutClass = 'collage-3-pp-l';
+          landscapes[0].classList.add('collage-hero-landscape');
+        }
+
+        photosContainer.classList.add(layoutClass);
+        photosContainer.classList.add('collage-3-active');
+
+        images.forEach((img, idx) => {
+          let tilt = (idx % 2 === 0 ? -1.0 : 1.0) + (Math.random() * 0.6 - 0.3);
+          img.style.transform = `rotate(${tilt.toFixed(1)}deg)`;
+          img.classList.add('collage-3-photo');
+        });
+      };
+
+      if (images.every(img => img.complete && img.naturalHeight > 0)) {
+        apply3PhotoLayout();
+      } else {
+        let loadedCount = 0;
+        images.forEach(img => {
+          if (img.complete && img.naturalHeight > 0) {
+            loadedCount++;
+            if (loadedCount === images.length) apply3PhotoLayout();
+          } else {
+            img.addEventListener('load', () => {
+              loadedCount++;
+              if (loadedCount === images.length) apply3PhotoLayout();
+            });
+            img.addEventListener('error', () => {
+              loadedCount++;
+              if (loadedCount === images.length) apply3PhotoLayout();
+            });
+          }
+        });
+      }
+    } else if (images.length >= 2) {
       const applyLayout = () => {
         let allLandscape = true;
         let allPortrait = true;

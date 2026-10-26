@@ -23,14 +23,18 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'amazon aws audible', label: 'Amazon / AWS / Audible Experience', category: 'About', route: 'about', icon: '👤' },
 
   // Resume content
-  { text: 'senior engineering lead google new york fleet management', label: 'Google — Senior Engineering Lead', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'automated ml pipeline fleet management', label: 'Automated ML Pipeline at Google', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'software developer lead amazon global logistic boston', label: 'Amazon — Software Developer Lead', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'engineering leader google ml ai fleet automation massachusetts', label: 'Google — Engineering Leader', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'virtual connection google meet collaboration', label: 'Google — Virtual Connection', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'senior software engineer google video conference fleet new york', label: 'Google — Video Conference Fleet', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'engineering manager amazon global logistic boston shipment api', label: 'Amazon — Engineering Manager', category: 'Resume', route: 'resume', icon: '💼' },
   { text: 'price aggregator shipment capacity planner', label: 'Price Aggregator & Capacity Planner', category: 'Resume', route: 'resume', icon: '💼' },
   { text: 'aws migration hub control tower continuous export', label: 'AWS — Migration Hub / Control Tower', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'audible android platform channels', label: 'Audible — Android Platform', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'executive mba nyu new york university', label: 'NYU — Executive MBA', category: 'Resume', route: 'resume', icon: '🎓' },
+  { text: 'audible android audio player fire phone kindle sync', label: 'Audible — Android Platform', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'amazon kindle community website goodreads chat', label: 'Amazon — Kindle Community', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'executive mba nyu stern new york university', label: 'NYU Stern — Executive MBA', category: 'Resume', route: 'resume', icon: '🎓' },
   { text: 'ms electrical computer engineering rutgers', label: 'Rutgers — MS ECE', category: 'Resume', route: 'resume', icon: '🎓' },
+  { text: 'be electronics communication manipal institute of technology', label: 'Manipal — BE Electronics & Communication', category: 'Resume', route: 'resume', icon: '🎓' },
+  { text: 'skills ai strategy rag llm leadership gcp aws android', label: 'Skills & Expertise', category: 'Resume', route: 'resume', icon: '🧰' },
 
   // Connect content
   { text: 'linkedin social profile', label: 'LinkedIn Profile', category: 'Connect', route: 'connect', icon: '🔗' },

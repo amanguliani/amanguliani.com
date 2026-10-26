@@ -18,6 +18,31 @@
   margin-bottom: 1rem;
 }
 
+.resume-summary {
+  max-width: 720px;
+  margin: 0 auto 1rem;
+  line-height: 1.6;
+}
+
+.resume-section-title {
+  max-width: 800px;
+  margin: 2.5rem auto 1.5rem;
+  padding-left: 0.25rem;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.resume-skills {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.resume-skills p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
 .social-links {
   display: flex;
   justify-content: center;

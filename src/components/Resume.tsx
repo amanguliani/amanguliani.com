@@ -26,7 +26,7 @@ const Resume = () => {
           <div className="timeline-icon"><Briefcase size={18} /></div>
           <div className="timeline-content glass-panel">
             <h3>Engineering Leader</h3>
-            <span className="timeline-date">Jan 2023 - Present • Google, Massachusetts</span>
+            <span className="timeline-date">Jan 2023 - Present • Google, San Francisco Bay Area</span>
             <p>Leading a team to build next-generation tooling for operational excellence and automation across the IT operations fleet using ML and AI.</p>
           </div>
         </div>

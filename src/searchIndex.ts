@@ -23,7 +23,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'amazon aws audible', label: 'Amazon / AWS / Audible Experience', category: 'About', route: 'about', icon: '👤' },
 
   // Resume content
-  { text: 'engineering leader google ml ai fleet automation massachusetts', label: 'Google — Engineering Leader', category: 'Resume', route: 'resume', icon: '💼' },
+  { text: 'engineering leader google ml ai fleet automation san francisco bay area', label: 'Google — Engineering Leader', category: 'Resume', route: 'resume', icon: '💼' },
   { text: 'virtual connection google meet collaboration', label: 'Google — Virtual Connection', category: 'Resume', route: 'resume', icon: '💼' },
   { text: 'senior software engineer google video conference fleet new york', label: 'Google — Video Conference Fleet', category: 'Resume', route: 'resume', icon: '💼' },
   { text: 'engineering manager amazon global logistic boston shipment api', label: 'Amazon — Engineering Manager', category: 'Resume', route: 'resume', icon: '💼' },

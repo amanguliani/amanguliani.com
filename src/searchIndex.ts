@@ -17,7 +17,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'play my fav word game bulls eye bullseye', label: 'Play Bulls Eye', category: 'Navigation', route: 'bullseye', icon: '🎯' },
 
   // About content
-  { text: 'aman guliani senior engineering lead google', label: 'Senior Engineering Lead at Google', category: 'About', route: 'about', icon: '👤' },
+  { text: 'aman guliani engineering leader google', label: 'Engineering Leader at Google', category: 'About', route: 'about', icon: '👤' },
   { text: 'scalable systems ml pipelines machine learning', label: 'ML Pipelines & Scalable Systems', category: 'About', route: 'about', icon: '👤' },
   { text: 'teaching python kids beginners education', label: 'Teaching Python to Kids', category: 'About', route: 'about', icon: '👤' },
   { text: 'amazon aws audible', label: 'Amazon / AWS / Audible Experience', category: 'About', route: 'about', icon: '👤' },

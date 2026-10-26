@@ -9,7 +9,6 @@ import MatrixRain from './components/MatrixRain';
 import Connect from './components/Connect';
 import BullsEye from './components/BullsEye';
 import About from './components/About';
-import Photos from './components/Photos';
 import Astrology from './components/Astrology';
 import { searchContent } from './searchIndex';
 import type { SearchEntry } from './searchIndex';
@@ -17,7 +16,7 @@ import { getRandomFunnyFact } from './funnyFacts';
 
 
 
-type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'photos' | 'astrology' | 'photobook' | null;
+type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'astrology' | null;
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -48,34 +47,6 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, [matrixState]);
-
-  // Handle direct url paths (deep linking)
-  useEffect(() => {
-    const path = window.location.pathname.replace(/\/$/, ''); // strip trailing slash
-    if (path === '/photobook' || path === '/riyan-photobook') {
-      setActiveComponent('photobook');
-      setInputValue('riyan photobook');
-    }
-  }, []);
-
-  // Expose function and handle postMessage from embedded photobook to navigate back home
-  useEffect(() => {
-    (window as any).handleBackToHome = () => {
-      setActiveComponent(null);
-      setInputValue('');
-    };
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data === 'back-to-home') {
-        setActiveComponent(null);
-        setInputValue('');
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => {
-      delete (window as any).handleBackToHome;
-      window.removeEventListener('message', handleMessage);
-    };
-  }, []);
 
   // Update search results when input changes
   useEffect(() => {
@@ -117,8 +88,6 @@ function App() {
     const astroKeywords = ['astrology', 'horoscope', 'tarot', 'fortune', 'cosmic', 'oracle'];
     const isAstroQ = astroKeywords.some(kw => command.includes(kw));
 
-    const isPhotobookQ = command.includes('riyan') || command.includes('photobook') || command.includes('dadi') || command === 'book';
-
     if (isPalmQ) {
       setActiveComponent(null);
       setErrorMsg('');
@@ -127,8 +96,6 @@ function App() {
       setShowPalmReading(true);
     } else if (isAstroQ) {
       navigateTo('astrology');
-    } else if (isPhotobookQ) {
-      navigateTo('photobook');
     } else if (isPersonalQ) {
       setActiveComponent(null);
       setErrorMsg('');
@@ -149,8 +116,6 @@ function App() {
       navigateTo('connect');
     } else if (command.includes('bulls eye') || command.includes('bullseye') || command.includes('game') || command.includes('play')) {
       navigateTo('bullseye');
-    } else if (command.includes('photo') || command.includes('gallery') || command.includes('picture') || command.includes('image')) {
-      navigateTo('photos');
     } else if (command === 'clear' || command === '') {
       setActiveComponent(null);
       setErrorMsg('');
@@ -162,7 +127,7 @@ function App() {
       setFunnyMsg('');
       setHintMsg('');
       setShowPalmReading(false);
-      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "resume", "connect", "photos", or "play game".`);
+      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "resume", "connect", or "play game".`);
     }
   };
 
@@ -176,18 +141,6 @@ function App() {
     handleCommand(inputValue);
     setShowSuggestions(false);
   };
-
-  if (activeComponent === 'photobook') {
-    return (
-      <div className="photobook-full-page" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99999, background: '#FAF7F2' }}>
-        <iframe
-          src="/photobook/index.html"
-          style={{ width: '100%', height: '100%', border: 'none' }}
-          title="Riyan's Photobook"
-        />
-      </div>
-    );
-  }
 
   return (
     <div className={`app-container ${matrixState !== 'inactive' ? 'matrix-active' : ''}`}>
@@ -262,8 +215,6 @@ function App() {
             Try: <span onClick={() => { setInputValue('about me'); navigateTo('about'); }}>About Aman</span>,
             <span onClick={() => { setInputValue('resume'); navigateTo('resume'); }}> Resume</span>,
             <span onClick={() => { setInputValue('connect with me'); navigateTo('connect'); }}> Connect</span>,
-            <span onClick={() => { setInputValue('photos'); navigateTo('photos'); }}> Photos</span>,
-            <span onClick={() => { setInputValue('riyan photobook'); navigateTo('photobook'); }}> Riyan's Photobook</span>,
             <span onClick={() => { setInputValue('play my fav word game'); navigateTo('bullseye'); }}> Play a game</span>
           </p>
         )}
@@ -305,9 +256,6 @@ function App() {
         </div>
         <div style={{ display: activeComponent === 'bullseye' ? 'block' : 'none', width: '100%' }}>
           <BullsEye />
-        </div>
-        <div style={{ display: activeComponent === 'photos' ? 'block' : 'none', width: '100%' }}>
-          <Photos />
         </div>
         <div style={{ display: activeComponent === 'astrology' ? 'block' : 'none', width: '100%' }}>
           <Astrology />

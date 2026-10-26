@@ -4,8 +4,8 @@
 export interface SearchEntry {
   text: string;       // searchable content (lowercased internally)
   label: string;      // what to display in the dropdown
-  category: string;   // e.g. "About", "Resume", "Photos"
-  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'photos' | 'astrology' | 'photobook';
+  category: string;   // e.g. "About", "Resume", "Connect"
+  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'astrology';
   icon: string;       // emoji to display
 }
 
@@ -15,8 +15,6 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'resume experience work history', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
   { text: 'connect with me contact social email', label: 'Connect with Me', category: 'Navigation', route: 'connect', icon: '🤝' },
   { text: 'play my fav word game bulls eye bullseye', label: 'Play Bulls Eye', category: 'Navigation', route: 'bullseye', icon: '🎯' },
-  { text: 'photos gallery pictures images', label: 'Photo Gallery', category: 'Navigation', route: 'photos', icon: '📸' },
-  { text: 'riyan photobook dadi letters book story', label: 'Riyan\'s Photobook', category: 'Navigation', route: 'photobook', icon: '📖' },
 
   // About content
   { text: 'aman guliani senior engineering lead google', label: 'Senior Engineering Lead at Google', category: 'About', route: 'about', icon: '👤' },
@@ -38,9 +36,6 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'linkedin social profile', label: 'LinkedIn Profile', category: 'Connect', route: 'connect', icon: '🔗' },
   { text: 'instagram social', label: 'Instagram', category: 'Connect', route: 'connect', icon: '📷' },
   { text: 'email amanguliani@gmail.com contact message', label: 'Email — amanguliani@gmail.com', category: 'Connect', route: 'connect', icon: '✉️' },
-
-  // Photos content
-  { text: 'photos gallery pictures images memories', label: 'Photo Gallery', category: 'Photos', route: 'photos', icon: '📸' },
 
   // Personal facts (funny responses)
   { text: 'favorite food hobby hobbies personal fun fact', label: 'Ask a Personal Question', category: 'Fun', route: 'about', icon: '😄' },

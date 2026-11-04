@@ -1,20 +1,36 @@
 // Centralized search index for full-site search
 // Each entry has searchable text, a display label, a category, and the route to navigate to
+import { BLOG_POSTS } from './blogData';
 
 export interface SearchEntry {
   text: string;       // searchable content (lowercased internally)
   label: string;      // what to display in the dropdown
-  category: string;   // e.g. "About", "Resume", "Connect"
-  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'astrology';
+  category: string;   // e.g. "About", "Resume", "Connect", "Blog", "Navigation"
+  route: 'about' | 'resume' | 'connect' | 'bullseye' | 'astrology' | 'blog';
   icon: string;       // emoji to display
+  targetId?: string;  // optional post or section ID
 }
+
+// Convert blog posts into rich search entries
+const blogSearchEntries: SearchEntry[] = BLOG_POSTS.map(post => ({
+  text: `${post.title} ${post.excerpt} ${post.tags.join(' ')} ${post.category} ${post.content.lead} ${post.content.sections.map(s => s.heading || '').join(' ')}`.toLowerCase(),
+  label: post.title,
+  category: `Blog • ${post.category}`,
+  route: 'blog',
+  icon: '📰',
+  targetId: post.id,
+}));
 
 export const SEARCH_INDEX: SearchEntry[] = [
   // Commands (top-level navigation)
-  { text: 'about me', label: 'About Me', category: 'Navigation', route: 'about', icon: '👤' },
-  { text: 'resume experience work history', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
-  { text: 'connect with me contact social email', label: 'Connect with Me', category: 'Navigation', route: 'connect', icon: '🤝' },
-  { text: 'play my fav word game bulls eye bullseye', label: 'Play Bulls Eye', category: 'Navigation', route: 'bullseye', icon: '🎯' },
+  { text: 'about me who am i', label: 'About Me', category: 'Navigation', route: 'about', icon: '👤' },
+  { text: 'resume experience work history career', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
+  { text: 'blog articles posts writing essays thoughts publications', label: 'Blog & Articles', category: 'Navigation', route: 'blog', icon: '📝' },
+  { text: 'connect with me contact social email linkedin', label: 'Connect with Me', category: 'Navigation', route: 'connect', icon: '🤝' },
+  { text: 'play my fav word game bulls eye bullseye game', label: 'Play Bulls Eye', category: 'Navigation', route: 'bullseye', icon: '🎯' },
+
+  // Blog Posts
+  ...blogSearchEntries,
 
   // About content
   { text: 'aman guliani engineering leader google', label: 'Engineering Leader at Google', category: 'About', route: 'about', icon: '👤' },

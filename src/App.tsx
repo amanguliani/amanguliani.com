@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { FormEvent } from 'react';
 import './App.css';
 import { Search } from 'lucide-react';
@@ -10,17 +10,20 @@ import Connect from './components/Connect';
 import BullsEye from './components/BullsEye';
 import About from './components/About';
 import Astrology from './components/Astrology';
+import Blog from './components/Blog';
+import { BLOG_POSTS } from './blogData';
 import { searchContent } from './searchIndex';
 import type { SearchEntry } from './searchIndex';
 import { getRandomFunnyFact } from './funnyFacts';
 
 
 
-type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'astrology' | null;
+type ActiveComponent = 'resume' | 'connect' | 'bullseye' | 'about' | 'astrology' | 'blog' | null;
 
 function App() {
   const [inputValue, setInputValue] = useState('');
   const [activeComponent, setActiveComponent] = useState<ActiveComponent>(null);
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [funnyMsg, setFunnyMsg] = useState('');
   const [hintMsg, setHintMsg] = useState('');
@@ -28,9 +31,6 @@ function App() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [avatarClicks, setAvatarClicks] = useState(0);
   const [matrixState, setMatrixState] = useState<'inactive' | 'active' | 'fading'>('inactive');
-  const [searchResults, setSearchResults] = useState<SearchEntry[]>([]);
-
-
   useEffect(() => {
     if (avatarClicks > 0 && avatarClicks < 10) {
       const timer = setTimeout(() => setAvatarClicks(0), 1000);
@@ -48,17 +48,15 @@ function App() {
     }
   }, [matrixState]);
 
-  // Update search results when input changes
-  useEffect(() => {
-    if (inputValue.trim()) {
-      setSearchResults(searchContent(inputValue));
-    } else {
-      setSearchResults([]);
-    }
+  const searchResults = useMemo(() => {
+    return inputValue.trim() ? searchContent(inputValue) : [];
   }, [inputValue]);
 
   const navigateTo = (route: ActiveComponent) => {
     setActiveComponent(route);
+    if (route !== 'blog') {
+      setSelectedPostId(null);
+    }
     setErrorMsg('');
     setFunnyMsg('');
     setHintMsg('');
@@ -88,6 +86,19 @@ function App() {
     const astroKeywords = ['astrology', 'horoscope', 'tarot', 'fortune', 'cosmic', 'oracle'];
     const isAstroQ = astroKeywords.some(kw => command.includes(kw));
 
+    // Blog keywords
+    const blogKeywords = ['blog', 'article', 'articles', 'post', 'posts', 'writing', 'writings', 'essay', 'essays', 'publication', 'publications', 'read'];
+    const isBlogCommand = blogKeywords.some(kw => command === kw || command.startsWith(kw + ' ') || command.endsWith(' ' + kw) || command === `read ${kw}`);
+
+    // Specific blog post search
+    const matchedBlogPost = BLOG_POSTS.find(p =>
+      command === p.id ||
+      command === p.title.toLowerCase() ||
+      (command.length >= 4 && p.title.toLowerCase().includes(command)) ||
+      (command.length >= 4 && command.includes(p.title.toLowerCase())) ||
+      (command.length >= 4 && p.tags.some(t => t.toLowerCase() === command))
+    );
+
     if (isPalmQ) {
       setActiveComponent(null);
       setErrorMsg('');
@@ -112,6 +123,12 @@ function App() {
       navigateTo('about');
     } else if (command.includes('resume') || command.includes('experience')) {
       navigateTo('resume');
+    } else if (matchedBlogPost) {
+      setSelectedPostId(matchedBlogPost.id);
+      navigateTo('blog');
+    } else if (isBlogCommand || command.includes('blog')) {
+      setSelectedPostId(null);
+      navigateTo('blog');
     } else if (command.includes('connect') || command.includes('contact') || command.includes('social') || command.includes('hi') || command.includes('hello') || command.includes('email')) {
       navigateTo('connect');
     } else if (command.includes('bulls eye') || command.includes('bullseye') || command.includes('game') || command.includes('play')) {
@@ -127,12 +144,22 @@ function App() {
       setFunnyMsg('');
       setHintMsg('');
       setShowPalmReading(false);
-      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "resume", "connect", or "play game".`);
+      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "about", "resume", "blog", "connect", or "play game".`);
     }
   };
 
   const handleSearchSelect = (entry: SearchEntry) => {
-    handleCommand(entry.label);
+    if (entry.route === 'blog') {
+      if (entry.targetId) {
+        setSelectedPostId(entry.targetId);
+      } else {
+        setSelectedPostId(null);
+      }
+      setInputValue(entry.label);
+      navigateTo('blog');
+    } else {
+      handleCommand(entry.label);
+    }
     setShowSuggestions(false);
   };
 
@@ -214,6 +241,7 @@ function App() {
           <p className="search-hints">
             Try: <span onClick={() => { setInputValue('about me'); navigateTo('about'); }}>About Aman</span>,
             <span onClick={() => { setInputValue('resume'); navigateTo('resume'); }}> Resume</span>,
+            <span onClick={() => { setInputValue('blog'); setSelectedPostId(null); navigateTo('blog'); }}> Blog</span>,
             <span onClick={() => { setInputValue('connect with me'); navigateTo('connect'); }}> Connect</span>,
             <span onClick={() => { setInputValue('play my fav word game'); navigateTo('bullseye'); }}> Play a game</span>
           </p>
@@ -259,6 +287,9 @@ function App() {
         </div>
         <div style={{ display: activeComponent === 'astrology' ? 'block' : 'none', width: '100%' }}>
           <Astrology />
+        </div>
+        <div style={{ display: activeComponent === 'blog' ? 'block' : 'none', width: '100%' }}>
+          <Blog selectedPostId={selectedPostId} onSelectPost={setSelectedPostId} />
         </div>
       </div>
     </div>

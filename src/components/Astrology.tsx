@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import './Astrology.css';
 
 // ── Zodiac data ──
@@ -80,19 +80,15 @@ const Astrology = () => {
   const [tarotCards, setTarotCards] = useState<TarotCard[]>([]);
   const [flippedIndices, setFlippedIndices] = useState<Set<number>>(new Set());
   const [loadingError, setLoadingError] = useState('');
-  const [particles, setParticles] = useState<{ id: number; x: number; y: number; delay: number; size: number }[]>([]);
-
-  // Generate floating particles
-  useEffect(() => {
-    const pts = Array.from({ length: 30 }, (_, i) => ({
+  const [particles] = useState<{ id: number; x: number; y: number; delay: number; size: number }[]>(() =>
+    Array.from({ length: 30 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
       delay: Math.random() * 5,
       size: 2 + Math.random() * 3,
-    }));
-    setParticles(pts);
-  }, []);
+    }))
+  );
 
   const fetchReadings = useCallback(async (sign: typeof ZODIAC_SIGNS[0]) => {
     setPhase('loading');

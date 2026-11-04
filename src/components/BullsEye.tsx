@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { WORD_DICTIONARY } from './words';
 import './BullsEye.css';
@@ -12,16 +12,12 @@ interface GuessResult {
 }
 
 const BullsEye = () => {
-  const [targetWord, setTargetWord] = useState('');
+  const [targetWord, setTargetWord] = useState(getRandomWord);
   const [guesses, setGuesses] = useState<GuessResult[]>([]);
   const [currentGuess, setCurrentGuess] = useState('');
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState('');
   const [isValidating, setIsValidating] = useState(false);
-
-  useEffect(() => {
-    setTargetWord(getRandomWord());
-  }, []);
 
   const calculateBullsAndCows = (guess: string) => {
     let bulls = 0;

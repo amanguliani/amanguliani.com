@@ -35,6 +35,65 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    id: 'i-am-the-problem-its-me',
+    title: "I Am the Problem, It's Me: How I Became the Bottleneck in the Age of AI",
+    date: 'November 2026',
+    readTime: '4 min read',
+    category: 'Engineering Leadership',
+    tags: ['AI Agents', 'Engineering Leadership', 'Bottlenecks', 'System Design', 'Human in the Loop', 'Culture'],
+    linkedinUrl: 'https://www.linkedin.com/in/amanguliani/recent-activity/all/',
+    excerpt: "In a world of Alien Intelligence generating everything instantly, my stubborn refusal to let go has made me the ultimate bottleneck. My entire pitch to teams was always to eliminate bottlenecks... and now I am one.",
+    content: {
+      lead: "My entire career as an engineering leader can be summed up in one recurring sermon to my teams: 'Identify the bottleneck, ruthlessly optimize it, and get out of the way.' So you can imagine my existential crisis when I looked at our development pipeline recently and realized... the bottleneck is me.",
+      sections: [
+        {
+          heading: "The Speed of 'Alien Intelligence'",
+          paragraphs: [
+            "We are now living in a world of Alien Intelligence writing code, spinning up PRs, and scaffolding entire services in seconds. The machines don't sleep, they don't take coffee breaks, and they certainly don't suffer from afternoon sugar crashes.",
+            "In theory, velocity should be approaching infinity. But in practice? Code piles up at the gates like rush-hour traffic on the 101, all waiting for one obstinate human carbon-unit to stamp his approval."
+          ],
+          callout: {
+            type: 'insight',
+            text: "As someone whose entire management philosophy was built on removing bottlenecks, I have somehow evolved into the world's most sophisticated single point of failure."
+          }
+        },
+        {
+          heading: "The 5 Things I Still Stubbornly Refuse to Delegate",
+          paragraphs: [
+            "I know what the prompt-maximalists will tell me: 'Aman, just build an agent to review the agents! Set up an autonomous governance loop!'",
+            "And sure, maybe I can. But right now, I'm having a hard time giving up control when I can't yet shake the conviction that human intelligence and intuition are the only things standing between an elegant system and an architectural disaster.",
+            "Specifically, there are five things I stubbornly insist on reviewing myself:"
+          ],
+          bullets: [
+            "1. Technical Design Specs: I insist on looking at technical designs before a single line gets built, scanning for completeness and hidden future traps. Agents are great at solving the problem you typed into the prompt; they are terrible at anticipating the architectural debt you will drown in six months from now.",
+            "2. The Infinite Code Review Spiral: When code reviews generate multiple churns and get stuck in endless revision loops, someone has to step in, slam the emergency brake, and say: 'Stop cooking, you burned the kitchen.'",
+            "3. Evals & Performance Metrics: If an agent writes the code and an agent grades the test, who watches the watchers? I insist on auditing the evals that measure our agents' performance so we don't build models that are exceptionally skilled at passing their own self-deluded benchmarks.",
+            "4. Prompts & Agent Intent: The user-facing prompt is where product intent and personality live. Left unguided, agents alternate between clinical robot speak and sycophantic corporate fluff. Human taste matters here.",
+            "5. Team Workflows & Productionization: Putting automated actions into live customer-facing infrastructure requires real accountability. If an automated script takes down a cluster at 3 AM, an LLM isn't getting paged on PagerDuty—I am."
+          ]
+        },
+        {
+          heading: "In the Words of the Great Poet of Our Time...",
+          paragraphs: [
+            "I want to let go. I really do. But navigating where human intelligence still plays a vital role versus where it's just nostalgic micromanagement is the defining leadership challenge of 2026.",
+            "Until I figure that boundary out, I'll be sitting here at my desk, desperately trying to review 47 agent-generated PRs before tomorrow morning.",
+            "In the immortal words of the defining poet of our generation, Taylor Swift:"
+          ],
+          callout: {
+            type: 'quote',
+            text: "It's me, hi, I'm the problem, it's me."
+          }
+        }
+      ],
+      takeaways: [
+        'When code generation speed approaches zero-cost, human review becomes the primary latency driver.',
+        'Hold the line on architecture, evaluation integrity, and user-facing intent before letting agents ship autonomously.',
+        'Don\'t let agents review agents in an unmonitored vacuum—watch out for self-reinforcing echo loops.',
+        'Acknowledging you are the bottleneck is the first step toward designing sustainable human-in-the-loop guardrails.'
+      ]
+    }
+  },
+  {
     id: 'taste-workflow-and-ai-agents',
     title: 'Taste, Workflow, and AI: Directing the Chaos in 2026',
     date: 'November 2026',

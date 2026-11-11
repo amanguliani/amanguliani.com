@@ -269,6 +269,43 @@
   margin-top: 0.25rem;
 }
 
+.card-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--surface-border);
+  color: var(--text-secondary);
+  border-radius: 12px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.card-share-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.card-share-btn.copied {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.card-share-text {
+  font-size: 0.72rem;
+}
+
 .card-date {
   color: var(--text-secondary);
 }
@@ -389,6 +426,35 @@
   background: rgba(10, 102, 194, 0.16);
   border-color: #0a66c2;
   transform: translateY(-1px);
+}
+
+.meta-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--surface-border);
+  padding: 0.2rem 0.65rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.meta-share-btn:hover {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.meta-share-btn.copied {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #059669;
 }
 
 .article-title {
@@ -597,7 +663,39 @@
 
 .article-footer-nav {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
   justify-content: flex-start;
+}
+
+.btn-secondary-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-color);
+  border: 1px solid var(--surface-border);
+  color: var(--text-primary);
+  padding: 0.65rem 1.35rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-secondary-share:hover {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.btn-secondary-share.copied {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #059669;
 }
 
 .btn-primary {

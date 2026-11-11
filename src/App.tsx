@@ -52,6 +52,94 @@ function App() {
     return inputValue.trim() ? searchContent(inputValue) : [];
   }, [inputValue]);
 
+  // Read URL query parameters on initial mount & handle browser back/forward (popstate)
+  useEffect(() => {
+    const parseUrlState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const postParam = params.get('post') || params.get('article');
+      const tabParam = params.get('tab');
+
+      if (postParam) {
+        const found = BLOG_POSTS.find(p => p.id === postParam);
+        if (found) {
+          setSelectedPostId(found.id);
+          setActiveComponent('blog');
+          setInputValue(found.title);
+          return;
+        }
+      }
+
+      if (tabParam && ['resume', 'connect', 'bullseye', 'about', 'astrology', 'blog'].includes(tabParam)) {
+        setActiveComponent(tabParam as ActiveComponent);
+        if (tabParam !== 'blog') {
+          setSelectedPostId(null);
+        }
+      }
+    };
+
+    parseUrlState();
+
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const postParam = params.get('post') || params.get('article');
+      const tabParam = params.get('tab');
+
+      if (postParam) {
+        const found = BLOG_POSTS.find(p => p.id === postParam);
+        if (found) {
+          setSelectedPostId(found.id);
+          setActiveComponent('blog');
+          setInputValue(found.title);
+          return;
+        }
+      }
+
+      if (tabParam && ['resume', 'connect', 'bullseye', 'about', 'astrology', 'blog'].includes(tabParam)) {
+        setSelectedPostId(null);
+        setActiveComponent(tabParam as ActiveComponent);
+      } else {
+        setSelectedPostId(null);
+        setActiveComponent(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Sync URL query parameters whenever route or selected post changes
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const currentPost = url.searchParams.get('post') || url.searchParams.get('article');
+    const currentTab = url.searchParams.get('tab');
+
+    let targetPost: string | null = null;
+    let targetTab: string | null = null;
+
+    if (activeComponent === 'blog' && selectedPostId) {
+      targetPost = selectedPostId;
+    } else if (activeComponent) {
+      targetTab = activeComponent;
+    }
+
+    if (currentPost !== targetPost || currentTab !== targetTab) {
+      if (targetPost) {
+        url.searchParams.set('post', targetPost);
+        url.searchParams.delete('tab');
+        url.searchParams.delete('article');
+      } else if (targetTab) {
+        url.searchParams.set('tab', targetTab);
+        url.searchParams.delete('post');
+        url.searchParams.delete('article');
+      } else {
+        url.searchParams.delete('post');
+        url.searchParams.delete('article');
+        url.searchParams.delete('tab');
+      }
+      window.history.pushState({}, '', url.toString());
+    }
+  }, [activeComponent, selectedPostId]);
+
   const navigateTo = (route: ActiveComponent) => {
     setActiveComponent(route);
     if (route !== 'blog') {

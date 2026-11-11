@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import './Blog.css';
 import { BLOG_POSTS } from '../blogData';
-import { Calendar, Clock, ArrowLeft, Tag, BookOpen, Quote, Lightbulb, Sparkles, Search } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, Tag, BookOpen, Quote, Lightbulb, Sparkles, Search, Share2, Check } from 'lucide-react';
 import { LinkedinIcon } from './Connect';
 
 interface BlogProps {
@@ -12,6 +12,39 @@ interface BlogProps {
 const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchFilter, setSearchFilter] = useState<string>('');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleShare = async (post: { id: string; title: string; excerpt: string }) => {
+    const url = `${window.location.origin}/?post=${encodeURIComponent(post.id)}`;
+
+    if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+      try {
+        await navigator.share({
+          title: post.title,
+          text: post.excerpt,
+          url,
+        });
+        return;
+      } catch {
+        // Fallback to clipboard
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedId(post.id);
+      setTimeout(() => setCopiedId(null), 2500);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopiedId(post.id);
+      setTimeout(() => setCopiedId(null), 2500);
+    }
+  };
 
   const currentPost = useMemo(() => {
     return BLOG_POSTS.find(p => p.id === selectedPostId) || null;
@@ -73,6 +106,15 @@ const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
                   <span>Originally on LinkedIn ↗</span>
                 </a>
               )}
+              <button
+                type="button"
+                className={`meta-share-btn ${copiedId === currentPost.id ? 'copied' : ''}`}
+                onClick={() => handleShare(currentPost)}
+                title="Copy shareable link"
+              >
+                {copiedId === currentPost.id ? <Check size={14} /> : <Share2 size={14} />}
+                <span>{copiedId === currentPost.id ? 'Link copied! ✓' : 'Share'}</span>
+              </button>
             </div>
 
             <h1 className="article-title text-gradient">{currentPost.title}</h1>
@@ -180,6 +222,14 @@ const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
                 onClick={() => onSelectPost(null)}
               >
                 <ArrowLeft size={16} /> Back to Articles
+              </button>
+              <button
+                type="button"
+                className={`btn-secondary-share ${copiedId === currentPost.id ? 'copied' : ''}`}
+                onClick={() => handleShare(currentPost)}
+              >
+                {copiedId === currentPost.id ? <Check size={16} /> : <Share2 size={16} />}
+                <span>{copiedId === currentPost.id ? 'Link Copied to Clipboard! ✓' : 'Share This Article'}</span>
               </button>
             </div>
           </footer>
@@ -289,9 +339,24 @@ const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
                 </div>
                 <div className="card-date-action">
                   <span className="card-date">{post.date}</span>
-                  <span className="read-more-link">
-                    Read article →
-                  </span>
+                  <div className="card-actions-right">
+                    <button
+                      type="button"
+                      className={`card-share-btn ${copiedId === post.id ? 'copied' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleShare(post);
+                      }}
+                      title="Copy link to article"
+                      aria-label="Share article link"
+                    >
+                      {copiedId === post.id ? <Check size={13} /> : <Share2 size={13} />}
+                      <span className="card-share-text">{copiedId === post.id ? 'Copied!' : 'Share'}</span>
+                    </button>
+                    <span className="read-more-link">
+                      Read article →
+                    </span>
+                  </div>
                 </div>
               </div>
             </article>

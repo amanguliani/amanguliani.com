@@ -466,6 +466,107 @@ const PaperDiagram = ({ diagramKey, title }: PaperDiagramProps) => {
           </>
         );
 
+      case 'deepseek-r1':
+        return (
+          <>
+            <rect x="24" y="30" width="60" height="36" rx="7" fill="#1e3a8a" stroke="#3b82f6" strokeWidth="1.5" />
+            <text x="54" y="52" textAnchor="middle" fill="#ffffff" fontSize="10.5" fontWeight="700">
+              model
+            </text>
+
+            <line x1="86" y1="48" x2="112" y2="48" stroke="#60a5fa" strokeWidth="2" />
+
+            <rect x="114" y="18" width="114" height="56" rx="7" fill="#0f172a" />
+            <text x="124" y="34" fill="#e2e8f0" fontSize="9" fontFamily="monospace">
+              wait, recheck…
+            </text>
+            <line x1="124" y1="45" x2="214" y2="45" stroke="#334155" strokeWidth="2.5" />
+            <line x1="124" y1="54" x2="196" y2="54" stroke="#334155" strokeWidth="2.5" />
+            <line x1="124" y1="63" x2="206" y2="63" stroke="#334155" strokeWidth="2.5" />
+
+            <line x1="230" y1="48" x2="254" y2="48" stroke="#60a5fa" strokeWidth="2" />
+
+            <circle cx="274" cy="46" r="16" fill="#064e3b" stroke="#22c55e" strokeWidth="1.5" />
+            <path d="M267 46 L272 51 L282 40" fill="none" stroke="#4ade80" strokeWidth="2.5" />
+            <text x="274" y="74" textAnchor="middle" fill="#64748b" fontSize="9">
+              graded
+            </text>
+
+            <path d="M274 78 Q160 104 58 70" fill="none" stroke="#3b82f6" strokeWidth="1.8" />
+            <polygon points="54,67 62,67 57,74" fill="#3b82f6" />
+          </>
+        );
+
+      case 'unfaithful-cot':
+        return (
+          <>
+            <rect x="22" y="20" width="118" height="58" rx="7" fill="#0f172a" />
+            <text x="34" y="39" fill="#e2e8f0" fontSize="9.5" fontFamily="monospace">
+              Question…
+            </text>
+            <rect x="30" y="48" width="102" height="22" rx="4" fill="#1e293b" stroke="#3b82f6" strokeWidth="1.5" />
+            <text x="81" y="62" textAnchor="middle" fill="#93c5fd" fontSize="9" fontFamily="monospace">
+              hint: it&apos;s C
+            </text>
+
+            <line x1="142" y1="49" x2="162" y2="49" stroke="#64748b" strokeWidth="2" />
+
+            <rect x="164" y="14" width="134" height="44" rx="7" fill="#0f172a" />
+            <text x="174" y="29" fill="#cbd5e1" fontSize="8.5" fontFamily="monospace">
+              step 1 … step 2 …
+            </text>
+            <text x="174" y="41" fill="#ffffff" fontSize="8.5" fontFamily="monospace">
+              so it&apos;s C
+            </text>
+            <text x="174" y="52" fill="#94a3b8" fontSize="8">
+              (no mention of hint)
+            </text>
+
+            <rect x="206" y="66" width="52" height="24" rx="6" fill="#064e3b" stroke="#22c55e" strokeWidth="1.5" />
+            <text x="232" y="82" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="700">
+              C
+            </text>
+          </>
+        );
+
+      case 'llm-biology':
+        return (
+          <>
+            <text x="160" y="16" textAnchor="middle" fill="#94a3b8" fontSize="9.5">
+              &quot;capital of the state that has Dallas?&quot;
+            </text>
+
+            <rect x="26" y="28" width="66" height="26" rx="13" fill="#0f172a" />
+            <text x="59" y="44" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="600">
+              Dallas
+            </text>
+
+            <line x1="94" y1="41" x2="122" y2="41" stroke="#3b82f6" strokeWidth="2" />
+            <polygon points="118,37 125,41 118,45" fill="#3b82f6" />
+
+            <rect x="128" y="28" width="68" height="26" rx="13" fill="#1d4ed8" />
+            <text x="162" y="44" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="700">
+              Texas
+            </text>
+            <text x="162" y="68" textAnchor="middle" fill="#64748b" fontSize="8.5">
+              hidden step
+            </text>
+
+            <line x1="196" y1="44" x2="226" y2="62" stroke="#3b82f6" strokeWidth="2" />
+
+            <rect x="26" y="70" width="66" height="26" rx="13" fill="#0f172a" />
+            <text x="59" y="86" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="600">
+              capital
+            </text>
+            <line x1="94" y1="83" x2="224" y2="75" stroke="#64748b" strokeWidth="1.8" />
+
+            <rect x="226" y="58" width="68" height="28" rx="14" fill="#064e3b" stroke="#22c55e" strokeWidth="1.5" />
+            <text x="260" y="76" textAnchor="middle" fill="#ffffff" fontSize="10.5" fontWeight="700">
+              Austin
+            </text>
+          </>
+        );
+
       case 'cache-poison':
         return (
           <>

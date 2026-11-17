@@ -72,6 +72,12 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
     const isHighlighted = highlightedPaperNumber === paper.number;
     const statusLabel =
       paper.status === 'read' ? 'Read' : paper.isNextInQueue ? 'Next up' : 'Up Next';
+    const sourceHref = paper.arxivId
+      ? `https://arxiv.org/abs/${paper.arxivId}`
+      : paper.externalUrl ?? '#';
+    const sourceLabel = paper.arxivId
+      ? `Read paper · arXiv ${paper.arxivId}`
+      : `Read paper · ${paper.externalLabel ?? 'Source'}`;
 
     return (
       <details
@@ -121,12 +127,12 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
 
               <div className="paper-item-links">
                 <a
-                  href={`https://arxiv.org/abs/${paper.arxivId}`}
+                  href={sourceHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="paper-arxiv-link"
                 >
-                  <span>Read paper · arXiv {paper.arxivId}</span>
+                  <span>{sourceLabel}</span>
                   <ExternalLink size={12} aria-hidden="true" />
                 </a>
               </div>
@@ -149,6 +155,7 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
 
         <div
           className="paper-segmented-bar"
+          style={{ gridTemplateColumns: `repeat(${counts.total}, minmax(0, 1fr))` }}
           role="img"
           aria-label={`Progress: ${counts.read} read, ${counts.upNext} up next out of ${counts.total} papers`}
         >
@@ -200,14 +207,14 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
             >
               All Topics
             </button>
-            {PAPER_TOPICS.map(({ topic }) => (
+            {PAPER_TOPICS.map(({ topic, pillLabel }) => (
               <button
                 key={topic}
                 type="button"
                 className={`paper-pill ${selectedTopic === topic ? 'active' : ''}`}
                 onClick={() => setSelectedTopic(topic)}
               >
-                {topic}
+                {pillLabel}
               </button>
             ))}
           </div>
@@ -239,7 +246,7 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
             Paper #{highlightedPaperNumber} is hidden by your active filters.
           </span>
           <button type="button" className="paper-reset-link" onClick={resetFilters}>
-            Show all 19 papers
+            Show all {counts.total} papers
           </button>
         </div>
       )}

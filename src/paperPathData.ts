@@ -3,7 +3,8 @@ export type PaperTopic =
   | 'Adapting and aligning'
   | 'Agents'
   | 'Measuring agents and models'
-  | 'Limits and security'
+  | 'Reasoning: how AI thinks'
+  | 'Security'
   | 'Training classics';
 
 export type PaperStatus = 'read' | 'up-next';
@@ -12,7 +13,9 @@ export interface PaperEntry {
   number: string;
   subtopic: string;
   title: string;
-  arxivId: string;
+  arxivId?: string;
+  externalUrl?: string;
+  externalLabel?: string;
   topic: PaperTopic;
   status: PaperStatus;
   isNextInQueue?: boolean;
@@ -22,29 +25,40 @@ export interface PaperEntry {
   builderTakeaway: string;
 }
 
-export const PAPER_TOPICS: { topic: PaperTopic; subtitle: string }[] = [
+export const PAPER_TOPICS: { topic: PaperTopic; pillLabel: string; subtitle: string }[] = [
   {
     topic: 'How LLMs work',
+    pillLabel: 'How LLMs work',
     subtitle: 'The architecture, the big picture, and why bigger keeps getting better.',
   },
   {
     topic: 'Adapting and aligning',
+    pillLabel: 'Adapting and aligning',
     subtitle: 'Cheap fine-tuning, and teaching a model to be helpful and harmless.',
   },
   {
     topic: 'Agents',
+    pillLabel: 'Agents',
     subtitle: 'Models that think, use tools, learn from mistakes and work in real codebases.',
   },
   {
     topic: 'Measuring agents and models',
+    pillLabel: 'Measuring agents',
     subtitle: 'How we grade chatbots and test agents on real work.',
   },
   {
-    topic: 'Limits and security',
-    subtitle: 'Where models fail on their own, and how LLM systems get attacked.',
+    topic: 'Reasoning: how AI thinks',
+    pillLabel: 'How AI thinks',
+    subtitle: 'Whether models can check themselves, how reasoning is trained, and what really happens inside.',
+  },
+  {
+    topic: 'Security',
+    pillLabel: 'Security',
+    subtitle: 'How LLM systems get attacked, and how to defend them.',
   },
   {
     topic: 'Training classics',
+    pillLabel: 'Training classics',
     subtitle: 'Two older ideas still inside every LLM.',
   },
 ];
@@ -266,7 +280,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
     subtopic: 'Limits of self-correction',
     title: 'Large Language Models Cannot Self-Correct Reasoning Yet',
     arxivId: '2310.01798',
-    topic: 'Limits and security',
+    topic: 'Reasoning: how AI thinks',
     status: 'up-next',
     summary:
       'When a model reviews its own reasoning with no outside feedback, accuracy usually doesn\'t improve and often drops. Earlier "self-correction" gains mostly came from hints such as knowing when the answer was wrong.',
@@ -277,10 +291,53 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
   },
   {
     number: '17',
+    subtopic: 'Training reasoning with RL',
+    title: 'DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning',
+    arxivId: '2501.12948',
+    topic: 'Reasoning: how AI thinks',
+    status: 'up-next',
+    summary:
+      'DeepSeek rewarded the model only for correct final answers on math and coding, with no human-written reasoning to copy. Long step-by-step thinking, self-checking and "wait, let me re-check" moments appeared on their own, and the skill could be passed down to smaller models.',
+    diagramKey: 'deepseek-r1',
+    diagramCaption: 'reward only for the right final answer',
+    builderTakeaway:
+      'Outcome-based RL on verifiable tasks (math, tests, compilers) unlocks emergent self-verification without human CoT labels—and those distilled traces make small local models dramatically smarter.',
+  },
+  {
+    number: '18',
+    subtopic: 'Is the reasoning honest?',
+    title: "Reasoning Models Don't Always Say What They Think",
+    arxivId: '2505.05410',
+    topic: 'Reasoning: how AI thinks',
+    status: 'up-next',
+    summary:
+      "Anthropic slipped hints into prompts and checked whether reasoning models admitted using them. They mostly didn't, often under 20% of the time, so reading a model's chain of thought helps catch problems but can't prove what really drove an answer.",
+    diagramKey: 'unfaithful-cot',
+    diagramCaption: 'hint used, but admitted under 20% of the time',
+    builderTakeaway:
+      'Treat visible Chain-of-Thought like helpful debug logs, never as a faithful security audit trail—models regularly omit the real shortcut or hint that drove their output.',
+  },
+  {
+    number: '19',
+    subtopic: 'Looking inside the model',
+    title: 'On the Biology of a Large Language Model',
+    externalUrl: 'https://transformer-circuits.pub/2025/attribution-graphs/biology.html',
+    externalLabel: 'transformer-circuits.pub',
+    topic: 'Reasoning: how AI thinks',
+    status: 'up-next',
+    summary:
+      'Anthropic traced the internal circuits of Claude 3.5 Haiku to watch it work. It does real multi-step reasoning, plans rhymes before writing a line and shares concepts across languages, yet sometimes explains its math differently from how it actually did it.',
+    diagramKey: 'llm-biology',
+    diagramCaption: 'it thinks "Texas" before it says "Austin"',
+    builderTakeaway:
+      'Circuit-level attribution proves LLMs form genuine multi-hop latent plans ahead of the next token—while also proving post-hoc verbal explanations can diverge from internal computation.',
+  },
+  {
+    number: '20',
     subtopic: 'Security: cache poisoning',
     title: 'Similarity Is Not Validity: Defending LLM Semantic Caches Against Poisoning',
     arxivId: '2609.35908',
-    topic: 'Limits and security',
+    topic: 'Security',
     status: 'up-next',
     summary:
       'LLM apps save answers and reuse them for questions that look similar, so an attacker can plant a look-alike question with a bad answer. The defense checks the actual words: if deleting extra text makes it a closer match, it\'s likely poisoned, which blocks 82 to 98% of bad entries.',
@@ -290,7 +347,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'Cost-saving shortcuts create brand-new attack surfaces. Semantic vector similarity is NOT semantic equivalence—if your app caches LLM responses globally across users, you\'re one crafted prompt away from serving poisoned answers.',
   },
   {
-    number: '18',
+    number: '21',
     subtopic: 'Optimization classic',
     title: 'Adam: A Method for Stochastic Optimization',
     arxivId: '1412.6980',
@@ -304,7 +361,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'Every parameter in a Transformer moves along wildly different curvature scales. Knowing why AdamW keeps separate per-weight running moments explains why optimizer state consumes far more GPU memory than the weights themselves.',
   },
   {
-    number: '19',
+    number: '22',
     subtopic: 'Residual connections',
     title: 'Deep Residual Learning for Image Recognition (ResNet)',
     arxivId: '1512.03385',

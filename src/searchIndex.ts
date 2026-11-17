@@ -23,9 +23,9 @@ const blogSearchEntries: SearchEntry[] = BLOG_POSTS.map(post => ({
   targetId: post.id,
 }));
 
-// Index all 19 LLM Paper Path papers individually for instant deep-linking
+// Index all 22 LLM Paper Path papers individually for instant deep-linking
 const paperPathSearchEntries: SearchEntry[] = PAPER_PATH_ENTRIES.map(paper => ({
-  text: `${paper.number} ${paper.title} ${paper.subtopic} ${paper.topic} ${paper.arxivId} ${paper.summary} ${paper.builderTakeaway}`.toLowerCase(),
+  text: `${paper.number} ${paper.title} ${paper.subtopic} ${paper.topic} ${paper.arxivId ?? paper.externalLabel ?? ''} ${paper.summary} ${paper.builderTakeaway}`.toLowerCase(),
   label: `#${paper.number} · ${paper.title}`,
   category: `Paper Path • ${paper.topic}`,
   route: 'blog',
@@ -40,8 +40,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'resume experience work history career', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
   { text: 'blog articles posts writing essays thoughts publications', label: 'Blog & Articles', category: 'Navigation', route: 'blog', icon: '📝' },
   {
-    text: 'llm paper path reading list arxiv papers self study personal agent mac notebooklm podcast infographic voice mode commute 19 papers',
-    label: 'LLM Paper Path (19 Papers)',
+    text: 'llm paper path reading list arxiv papers self study personal agent mac notebooklm podcast infographic voice mode commute 22 papers',
+    label: 'LLM Paper Path (22 Papers)',
     category: 'AI & ML • Self-Study',
     route: 'blog',
     icon: '📚',
@@ -63,18 +63,72 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'amazon aws audible', label: 'Amazon / AWS / Audible Experience', category: 'About', route: 'about', icon: '👤' },
 
   // Resume content
-  { text: 'engineering leader google ml ai fleet automation san francisco bay area', label: 'Google — Engineering Leader', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'virtual connection google meet collaboration', label: 'Google — Virtual Connection', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'senior software engineer google video conference fleet new york', label: 'Google — Video Conference Fleet', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'engineering manager amazon global logistic boston shipment api', label: 'Amazon — Engineering Manager', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'price aggregator shipment capacity planner', label: 'Price Aggregator & Capacity Planner', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'aws migration hub control tower continuous export', label: 'AWS — Migration Hub / Control Tower', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'audible android audio player fire phone kindle sync', label: 'Audible — Android Platform', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'amazon kindle community website goodreads chat', label: 'Amazon — Kindle Community', category: 'Resume', route: 'resume', icon: '💼' },
-  { text: 'executive mba nyu stern new york university', label: 'NYU Stern — Executive MBA', category: 'Resume', route: 'resume', icon: '🎓' },
-  { text: 'ms electrical computer engineering rutgers', label: 'Rutgers — MS ECE', category: 'Resume', route: 'resume', icon: '🎓' },
-  { text: 'be electronics communication manipal institute of technology', label: 'Manipal — BE Electronics & Communication', category: 'Resume', route: 'resume', icon: '🎓' },
-  { text: 'skills ai strategy rag llm leadership gcp aws android', label: 'Skills & Expertise', category: 'Resume', route: 'resume', icon: '🧰' },
+  {
+    text: 'stealth stage ai startup co-founder technical lead consumer llm beta',
+    label: 'Stealth-Stage AI Startup — Co-Founder & Technical Lead',
+    category: 'Resume',
+    route: 'resume',
+    icon: '🚀',
+  },
+  {
+    text: 'l6 engineering manager google enterprise ai foundations support platforms mcp servicenow cloud spanner kafka pubsub hyderabad sydney sf bay area ai summit',
+    label: 'Google — L6 Engineering Manager (Enterprise AI & Support)',
+    category: 'Resume',
+    route: 'resume',
+    icon: '💼',
+  },
+  {
+    text: 'google meet hardware google beam 35000 rooms ml health auto repair reliability fleet consoles',
+    label: 'Google — Meet Hardware & Beam Fleet (35,000+ Rooms)',
+    category: 'Resume',
+    route: 'resume',
+    icon: '💼',
+  },
+  {
+    text: 'sr software developer manager amazon global transportation compliance boston shipment api price aggregator capacity planner',
+    label: 'Amazon — Sr Software Developer Manager (Global Transportation)',
+    category: 'Resume',
+    route: 'resume',
+    icon: '💼',
+  },
+  {
+    text: 'aws migration hub founding team control tower continuous export guardrails reinvent boston',
+    label: 'AWS — Migration Hub & Control Tower',
+    category: 'Resume',
+    route: 'resume',
+    icon: '💼',
+  },
+  {
+    text: 'audible android platform fire phone audio player streaming short content common libraries sso',
+    label: 'Audible — Android Platform, Fire Phone & SSO',
+    category: 'Resume',
+    route: 'resume',
+    icon: '💼',
+  },
+  {
+    text: 'amazon kindle community website ebook chat facebook twitter x-ray seattle',
+    label: 'Amazon — Kindle Community & X-Ray',
+    category: 'Resume',
+    route: 'resume',
+    icon: '💼',
+  },
+  { text: 'executive mba nyu stern school of business new york university', label: 'NYU Stern — Executive MBA', category: 'Resume', route: 'resume', icon: '🎓' },
+  { text: 'masters science electrical computer engineering rutgers new brunswick', label: 'Rutgers — MS ECE', category: 'Resume', route: 'resume', icon: '🎓' },
+  { text: 'bachelors electronics communication manipal institute of technology india', label: 'Manipal — BE Electronics & Communication', category: 'Resume', route: 'resume', icon: '🎓' },
+  {
+    text: 'skills python kotlin java c++ dart sql cel protobuf rag mcp multi-agent orchestration context compaction evals spanner pubsub kafka terraform gcp aws react',
+    label: 'Skills & Technical Architecture',
+    category: 'Resume',
+    route: 'resume',
+    icon: '🧰',
+  },
+  {
+    text: 'coursera machine learning certification amazon bar raiser 600 interviews mentorship teaching biologists kids',
+    label: 'Certifications, Bar Raiser (600+ Interviews) & Mentorship',
+    category: 'Resume',
+    route: 'resume',
+    icon: '🏅',
+  },
 
   // Connect content
   { text: 'linkedin social profile', label: 'LinkedIn Profile', category: 'Connect', route: 'connect', icon: '🔗' },

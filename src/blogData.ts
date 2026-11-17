@@ -38,7 +38,7 @@ export interface BlogPost {
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: 'llm-paper-path-going-deeper',
-    title: 'Going One Level Deeper: Hacking the Bay Area Commute with My 19-Paper LLM Path',
+    title: 'Going One Level Deeper: Hacking the Bay Area Commute with My 22-Paper LLM Path',
     date: 'November 2026',
     readTime: '4 min read + Paper Path',
     category: 'AI & ML',
@@ -70,13 +70,13 @@ export const BLOG_POSTS: BlogPost[] = [
           heading: 'Why Torture Myself? Going One Layer Deeper',
           paragraphs: [
             'Well, as computer engineering leaders, we owe it to ourselves—and whoever relies on what we ship—to go at least one layer deeper into how these models actually work and where they break. That’s how we build a safer, less brittle AI future.',
-            'Knowing why self-attention scales quadratically stops you from blindly dumping 100k-token repos into every prompt. Reading SWE-agent (#11) proves why agent-computer interfaces matter as much as raw model IQ. Seeing empirical proof that LLMs cannot self-correct without external ground truth (#16) stops you from building "agent reviews agent" echo chambers. And understanding semantic cache poisoning (#17) stops a latency shortcut from becoming a security vulnerability.',
+            'Knowing why self-attention scales quadratically stops you from blindly dumping 100k-token repos into every prompt. Reading SWE-agent (#11) proves why agent-computer interfaces matter as much as raw model IQ. Seeing empirical proof that LLMs cannot self-correct without external ground truth (#16) or always admit hints in Chain-of-Thought (#18) stops you from building blind "agent reviews agent" echo chambers. And understanding semantic cache poisoning (#20) stops a latency shortcut from becoming a security vulnerability.',
           ],
         },
         {
-          heading: 'My Living 19-Paper Path (6 Read, 13 Queued)',
+          heading: 'My Living 22-Paper Path (6 Read, 16 Queued)',
           paragraphs: [
-            'For anyone wondering—I’m 6 papers into a 19-paper reading path (DPO next, 13 queued) and threw the living list + visuals right below. Click any paper to expand its infographic, summary, and takeaway.',
+            'For anyone wondering—I’m 6 papers into a 22-paper reading path (DPO next, 16 queued) and threw the living list + visuals right below. Click any paper to expand its infographic, summary, and takeaway.',
             'Anyone else making time to go deep past the hype? If so, what’s one paper you would suggest that genuinely rewired how you build?',
             '[Usual Disclaimer: Crafted by carbon(me). Polished by TPUs(Also named carbon 🤪) ]',
           ],

@@ -217,7 +217,8 @@ function App() {
       ? PAPER_PATH_ENTRIES.find(p =>
           command === p.number ||
           command === `#${p.number}` ||
-          command.includes(p.arxivId) ||
+          (p.arxivId && command.includes(p.arxivId)) ||
+          (p.externalLabel && command.includes(p.externalLabel.toLowerCase())) ||
           p.title.toLowerCase().includes(command) ||
           command.includes(p.title.toLowerCase()) ||
           p.subtopic.toLowerCase() === command

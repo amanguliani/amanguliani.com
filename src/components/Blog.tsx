@@ -3,13 +3,15 @@ import './Blog.css';
 import { BLOG_POSTS } from '../blogData';
 import { Calendar, Clock, ArrowLeft, Tag, BookOpen, Quote, Lightbulb, Sparkles, Search, Share2, Check } from 'lucide-react';
 import { LinkedinIcon } from './Connect';
+import PaperPath from './PaperPath';
 
 interface BlogProps {
   selectedPostId: string | null;
   onSelectPost: (id: string | null) => void;
+  highlightedPaperNumber?: string | null;
 }
 
-const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
+const Blog = ({ selectedPostId, onSelectPost, highlightedPaperNumber = null }: BlogProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchFilter, setSearchFilter] = useState<string>('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -119,6 +121,10 @@ const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
 
             <h1 className="article-title text-gradient">{currentPost.title}</h1>
 
+            {currentPost.authorNote && (
+              <p className="article-author-note">✍️ {currentPost.authorNote}</p>
+            )}
+
             <p className="article-lead">{currentPost.content.lead}</p>
           </header>
 
@@ -191,6 +197,10 @@ const Blog = ({ selectedPostId, onSelectPost }: BlogProps) => {
                 )}
               </div>
             ))}
+
+            {currentPost.embedComponent === 'paper-path' && (
+              <PaperPath highlightedPaperNumber={highlightedPaperNumber} />
+            )}
 
             {currentPost.content.takeaways && (
               <div className="takeaways-box glass-panel">

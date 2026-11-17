@@ -8,6 +8,8 @@ export interface BlogPost {
   excerpt: string;
   linkedinUrl?: string;
   coverImage?: string;
+  authorNote?: string;
+  embedComponent?: 'paper-path';
   content: {
     lead: string;
     sections: {
@@ -35,6 +37,59 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    id: 'llm-paper-path-going-deeper',
+    title: 'Going One Level Deeper: Hacking the Bay Area Commute with My 19-Paper LLM Path',
+    date: 'November 2026',
+    readTime: '4 min read + Paper Path',
+    category: 'AI & ML',
+    tags: ['LLM Papers', 'AI Safety', 'Claude Duet', 'NotebookLM', 'Computer Use', 'Voice Mode', 'Agents', 'Evals'],
+    linkedinUrl: 'https://www.linkedin.com/in/amanguliani/recent-activity/all/',
+    authorNote: 'Crafted by carbon. Polished by silicon.',
+    embedComponent: 'paper-path',
+    excerpt:
+      'Hacking my Bay Area commute into an AI seminar: how Claude Duet (with computer use) spins up NotebookLM podcasts, infographics, and voice-mode quizzes while I drive home—and why engineers must look one level under the hood.',
+    content: {
+      lead: 'Confession time: between leading engineering teams, tinkering with local agent harnesses, and raising a toddler, sitting quietly for two hours to chew through dense arXiv PDFs just isn\'t happening. What I do have plenty of, however, is a long Bay Area commute home from work—so I decided to hack that drive into a rolling CS seminar.',
+      sections: [
+        {
+          heading: 'Hacking the Bay Area Commute (Claude Duet + NotebookLM + Voice Mode)',
+          paragraphs: [
+            'Most days, the industry runs on "vibes-based AI engineering"—wrap an API key, stitch together a clever prompt, pray to the temperature gods, and ship. To get past the vibes, I started an AI-assisted study loop anchored around Claude Duet, my personal agent with computer use:',
+          ],
+          bullets: [
+            '1. Claude Duet Preps the Material (Computer Use): Before I leave the office, Claude Duet takes the next paper on my reading path, drives NotebookLM in the browser to generate a podcast link and a quiz inside it, and builds a crisp visual infographic of the core mechanism.',
+            '2. Podcast on the Drive: I hit play on the NotebookLM audio during the long crawl down Highway 880/680 for first-pass intuition—just grasping the thesis and why the authors cared.',
+            '3. Voice-Mode Grilling While Driving: Here is the step that actually makes it stick. Listening to an AI podcast makes you feel smart for twenty minutes; switching into voice mode and letting the quiz grill you out loud in Bay Area traffic immediately exposes every concept you only thought you understood.',
+          ],
+          callout: {
+            type: 'insight',
+            text: 'Listening to a podcast creates the illusion of competence. Getting quizzed out loud in voice mode on the drive home exposes every gap before you ever touch production.',
+          },
+        },
+        {
+          heading: 'Why Engineers & Computer Scientists Need to Go One Level Deeper',
+          paragraphs: [
+            'You don\'t need to hand-derive every matrix gradient from scratch to ship useful AI software—but treating LLMs as magic black boxes has a hard safety and reliability ceiling.',
+            'Knowing why self-attention scales quadratically stops you from blindly dumping 100k-token repos into every prompt. Reading SWE-agent (#11) proves why agent-computer interfaces matter as much as raw model IQ. Seeing empirical proof that LLMs cannot self-correct without external ground truth (#16) stops you from building "agent reviews agent" echo chambers. And understanding semantic cache poisoning (#17) stops a latency shortcut from becoming a security vulnerability.',
+            'If we want to build a better-informed, safer AI future, engineers and computer scientists have to look at least one layer below the prompt.',
+          ],
+        },
+        {
+          heading: 'My Living 19-Paper Path (6 Read, 13 Up Next)',
+          paragraphs: [
+            'I\'m 6 papers into a 19-paper reading list covering how LLMs work, alignment (DPO is up next!), tool-using agents, real-world benchmarks like SWE-bench and τ-bench, limits and security, and two training classics.',
+            'Instead of pretending I read all 19 over one heroic weekend, I\'m publishing the living list right below. Click any paper to expand its concept diagram, summary, and takeaway—and tell me what\'s missing from my queue.',
+          ],
+        },
+      ],
+      takeaways: [
+        'Hacking the Bay Area commute: Claude Duet (computer use) + NotebookLM podcasts + infographics + voice-mode quizzing turns dead drive time into active recall.',
+        'Black-box prompting hits a wall; knowing attention, alignment, and benchmark mechanics directly improves system safety and harness design.',
+        'Agent reliability (pass^k), ungrounded self-correction limits, and semantic cache poisoning are real production engineering problems—not abstract theory.',
+      ],
+    },
+  },
+  {
     id: 'i-am-the-problem-its-me',
     title: "I Am the Problem, It's Me: How I Became the Bottleneck in the Age of AI",
     date: 'November 2026',
@@ -50,7 +105,7 @@ export const BLOG_POSTS: BlogPost[] = [
           heading: "The Speed of 'Alien Intelligence'",
           paragraphs: [
             "We are now living in a world of Alien Intelligence writing code, spinning up PRs, and scaffolding entire services in seconds. The machines don't sleep, they don't take coffee breaks, and they certainly don't suffer from afternoon sugar crashes.",
-            "In theory, velocity should be approaching infinity. But in practice? Code piles up at the gates like rush-hour traffic on the 101, all waiting for one obstinate human carbon-unit to stamp his approval."
+            "In theory, velocity should be approaching infinity. But in practice? Code piles up at the gates like rush-hour traffic on Highway 880/680, all waiting for one obstinate human carbon-unit to stamp his approval."
           ],
           callout: {
             type: 'insight',

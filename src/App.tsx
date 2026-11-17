@@ -12,6 +12,7 @@ import About from './components/About';
 import Astrology from './components/Astrology';
 import Blog from './components/Blog';
 import { BLOG_POSTS } from './blogData';
+import { PAPER_PATH_ENTRIES } from './paperPathData';
 import { searchContent } from './searchIndex';
 import type { SearchEntry } from './searchIndex';
 import { getRandomFunnyFact } from './funnyFacts';
@@ -24,6 +25,14 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [activeComponent, setActiveComponent] = useState<ActiveComponent>(null);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+  const [selectedPaperNumber, setSelectedPaperNumber] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paperParam = params.get('paper');
+    if (paperParam && PAPER_PATH_ENTRIES.some(p => p.number === paperParam)) {
+      return paperParam;
+    }
+    return null;
+  });
   const [errorMsg, setErrorMsg] = useState('');
   const [funnyMsg, setFunnyMsg] = useState('');
   const [hintMsg, setHintMsg] = useState('');
@@ -82,12 +91,20 @@ function App() {
     const handlePopState = () => {
       const params = new URLSearchParams(window.location.search);
       const postParam = params.get('post') || params.get('article');
+      const paperParam = params.get('paper');
       const tabParam = params.get('tab');
 
       if (postParam) {
         const found = BLOG_POSTS.find(p => p.id === postParam);
         if (found) {
           setSelectedPostId(found.id);
+          setSelectedPaperNumber(
+            found.id === 'llm-paper-path-going-deeper' &&
+              paperParam &&
+              PAPER_PATH_ENTRIES.some(p => p.number === paperParam)
+              ? paperParam
+              : null
+          );
           setActiveComponent('blog');
           setInputValue(found.title);
           return;
@@ -96,9 +113,11 @@ function App() {
 
       if (tabParam && ['resume', 'connect', 'bullseye', 'about', 'astrology', 'blog'].includes(tabParam)) {
         setSelectedPostId(null);
+        setSelectedPaperNumber(null);
         setActiveComponent(tabParam as ActiveComponent);
       } else {
         setSelectedPostId(null);
+        setSelectedPaperNumber(null);
         setActiveComponent(null);
       }
     };
@@ -111,39 +130,52 @@ function App() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const currentPost = url.searchParams.get('post') || url.searchParams.get('article');
+    const currentPaper = url.searchParams.get('paper');
     const currentTab = url.searchParams.get('tab');
 
     let targetPost: string | null = null;
+    let targetPaper: string | null = null;
     let targetTab: string | null = null;
 
     if (activeComponent === 'blog' && selectedPostId) {
       targetPost = selectedPostId;
+      if (selectedPostId === 'llm-paper-path-going-deeper' && selectedPaperNumber) {
+        targetPaper = selectedPaperNumber;
+      }
     } else if (activeComponent) {
       targetTab = activeComponent;
     }
 
-    if (currentPost !== targetPost || currentTab !== targetTab) {
+    if (currentPost !== targetPost || currentPaper !== targetPaper || currentTab !== targetTab) {
       if (targetPost) {
         url.searchParams.set('post', targetPost);
+        if (targetPaper) {
+          url.searchParams.set('paper', targetPaper);
+        } else {
+          url.searchParams.delete('paper');
+        }
         url.searchParams.delete('tab');
         url.searchParams.delete('article');
       } else if (targetTab) {
         url.searchParams.set('tab', targetTab);
         url.searchParams.delete('post');
+        url.searchParams.delete('paper');
         url.searchParams.delete('article');
       } else {
         url.searchParams.delete('post');
+        url.searchParams.delete('paper');
         url.searchParams.delete('article');
         url.searchParams.delete('tab');
       }
       window.history.pushState({}, '', url.toString());
     }
-  }, [activeComponent, selectedPostId]);
+  }, [activeComponent, selectedPostId, selectedPaperNumber]);
 
   const navigateTo = (route: ActiveComponent) => {
     setActiveComponent(route);
     if (route !== 'blog') {
       setSelectedPostId(null);
+      setSelectedPaperNumber(null);
     }
     setErrorMsg('');
     setFunnyMsg('');
@@ -178,6 +210,20 @@ function App() {
     const blogKeywords = ['blog', 'article', 'articles', 'post', 'posts', 'writing', 'writings', 'essay', 'essays', 'publication', 'publications', 'read'];
     const isBlogCommand = blogKeywords.some(kw => command === kw || command.startsWith(kw + ' ') || command.endsWith(' ' + kw) || command === `read ${kw}`);
 
+    // Paper Path keywords & specific paper lookup
+    const paperPathKeywords = ['paper path', 'papers', 'reading list', 'arxiv'];
+    const isPaperPathCommand = paperPathKeywords.some(kw => command.includes(kw));
+    const matchedPaper = command.length >= 3
+      ? PAPER_PATH_ENTRIES.find(p =>
+          command === p.number ||
+          command === `#${p.number}` ||
+          command.includes(p.arxivId) ||
+          p.title.toLowerCase().includes(command) ||
+          command.includes(p.title.toLowerCase()) ||
+          p.subtopic.toLowerCase() === command
+        )
+      : undefined;
+
     // Specific blog post search
     const matchedBlogPost = BLOG_POSTS.find(p =>
       command === p.id ||
@@ -211,11 +257,21 @@ function App() {
       navigateTo('about');
     } else if (command.includes('resume') || command.includes('experience')) {
       navigateTo('resume');
+    } else if (matchedPaper) {
+      setSelectedPostId('llm-paper-path-going-deeper');
+      setSelectedPaperNumber(matchedPaper.number);
+      navigateTo('blog');
+    } else if (isPaperPathCommand) {
+      setSelectedPostId('llm-paper-path-going-deeper');
+      setSelectedPaperNumber(null);
+      navigateTo('blog');
     } else if (matchedBlogPost) {
       setSelectedPostId(matchedBlogPost.id);
+      setSelectedPaperNumber(null);
       navigateTo('blog');
     } else if (isBlogCommand || command.includes('blog')) {
       setSelectedPostId(null);
+      setSelectedPaperNumber(null);
       navigateTo('blog');
     } else if (command.includes('connect') || command.includes('contact') || command.includes('social') || command.includes('hi') || command.includes('hello') || command.includes('email')) {
       navigateTo('connect');
@@ -223,6 +279,8 @@ function App() {
       navigateTo('bullseye');
     } else if (command === 'clear' || command === '') {
       setActiveComponent(null);
+      setSelectedPostId(null);
+      setSelectedPaperNumber(null);
       setErrorMsg('');
       setFunnyMsg('');
       setHintMsg('');
@@ -232,17 +290,14 @@ function App() {
       setFunnyMsg('');
       setHintMsg('');
       setShowPalmReading(false);
-      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "about", "resume", "blog", "connect", or "play game".`);
+      setErrorMsg(`I don't know how to respond to "${cmdStr}". Try "about", "resume", "blog", "paper path", "connect", or "play game".`);
     }
   };
 
   const handleSearchSelect = (entry: SearchEntry) => {
     if (entry.route === 'blog') {
-      if (entry.targetId) {
-        setSelectedPostId(entry.targetId);
-      } else {
-        setSelectedPostId(null);
-      }
+      setSelectedPostId(entry.targetId || null);
+      setSelectedPaperNumber(entry.paperNumber || null);
       setInputValue(entry.label);
       navigateTo('blog');
     } else {
@@ -329,7 +384,8 @@ function App() {
           <p className="search-hints">
             Try: <span onClick={() => { setInputValue('about me'); navigateTo('about'); }}>About Aman</span>,
             <span onClick={() => { setInputValue('resume'); navigateTo('resume'); }}> Resume</span>,
-            <span onClick={() => { setInputValue('blog'); setSelectedPostId(null); navigateTo('blog'); }}> Blog</span>,
+            <span onClick={() => { setInputValue('blog'); setSelectedPostId(null); setSelectedPaperNumber(null); navigateTo('blog'); }}> Blog</span>,
+            <span onClick={() => { setInputValue('paper path'); setSelectedPostId('llm-paper-path-going-deeper'); setSelectedPaperNumber(null); navigateTo('blog'); }}> Paper Path</span>,
             <span onClick={() => { setInputValue('connect with me'); navigateTo('connect'); }}> Connect</span>,
             <span onClick={() => { setInputValue('play my fav word game'); navigateTo('bullseye'); }}> Play a game</span>
           </p>
@@ -377,7 +433,16 @@ function App() {
           <Astrology />
         </div>
         <div style={{ display: activeComponent === 'blog' ? 'block' : 'none', width: '100%' }}>
-          <Blog selectedPostId={selectedPostId} onSelectPost={setSelectedPostId} />
+          <Blog
+            selectedPostId={selectedPostId}
+            onSelectPost={(id) => {
+              setSelectedPostId(id);
+              if (id !== 'llm-paper-path-going-deeper') {
+                setSelectedPaperNumber(null);
+              }
+            }}
+            highlightedPaperNumber={selectedPaperNumber}
+          />
         </div>
       </div>
     </div>

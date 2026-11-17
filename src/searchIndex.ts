@@ -1,6 +1,7 @@
 // Centralized search index for full-site search
 // Each entry has searchable text, a display label, a category, and the route to navigate to
 import { BLOG_POSTS } from './blogData';
+import { PAPER_PATH_ENTRIES } from './paperPathData';
 
 export interface SearchEntry {
   text: string;       // searchable content (lowercased internally)
@@ -9,6 +10,7 @@ export interface SearchEntry {
   route: 'about' | 'resume' | 'connect' | 'bullseye' | 'astrology' | 'blog';
   icon: string;       // emoji to display
   targetId?: string;  // optional post or section ID
+  paperNumber?: string; // optional paper # inside LLM Paper Path
 }
 
 // Convert blog posts into rich search entries
@@ -21,16 +23,38 @@ const blogSearchEntries: SearchEntry[] = BLOG_POSTS.map(post => ({
   targetId: post.id,
 }));
 
+// Index all 19 LLM Paper Path papers individually for instant deep-linking
+const paperPathSearchEntries: SearchEntry[] = PAPER_PATH_ENTRIES.map(paper => ({
+  text: `${paper.number} ${paper.title} ${paper.subtopic} ${paper.topic} ${paper.arxivId} ${paper.summary} ${paper.builderTakeaway}`.toLowerCase(),
+  label: `#${paper.number} · ${paper.title}`,
+  category: `Paper Path • ${paper.topic}`,
+  route: 'blog',
+  icon: '📑',
+  targetId: 'llm-paper-path-going-deeper',
+  paperNumber: paper.number,
+}));
+
 export const SEARCH_INDEX: SearchEntry[] = [
   // Commands (top-level navigation)
   { text: 'about me who am i', label: 'About Me', category: 'Navigation', route: 'about', icon: '👤' },
   { text: 'resume experience work history career', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
   { text: 'blog articles posts writing essays thoughts publications', label: 'Blog & Articles', category: 'Navigation', route: 'blog', icon: '📝' },
+  {
+    text: 'llm paper path reading list arxiv papers self study claude duet notebooklm podcast infographic voice mode commute 19 papers',
+    label: 'LLM Paper Path (19 Papers)',
+    category: 'AI & ML • Self-Study',
+    route: 'blog',
+    icon: '📚',
+    targetId: 'llm-paper-path-going-deeper',
+  },
   { text: 'connect with me contact social email linkedin', label: 'Connect with Me', category: 'Navigation', route: 'connect', icon: '🤝' },
   { text: 'play my fav word game bulls eye bullseye game', label: 'Play Bulls Eye', category: 'Navigation', route: 'bullseye', icon: '🎯' },
 
   // Blog Posts
   ...blogSearchEntries,
+
+  // Individual LLM Papers
+  ...paperPathSearchEntries,
 
   // About content
   { text: 'aman guliani engineering leader google', label: 'Engineering Leader at Google', category: 'About', route: 'about', icon: '👤' },

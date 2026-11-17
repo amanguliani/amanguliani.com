@@ -40,7 +40,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'resume experience work history career', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
   { text: 'blog articles posts writing essays thoughts publications', label: 'Blog & Articles', category: 'Navigation', route: 'blog', icon: '📝' },
   {
-    text: 'llm paper path reading list arxiv papers self study claude duet notebooklm podcast infographic voice mode commute 19 papers',
+    text: 'llm paper path reading list arxiv papers self study personal agent mac notebooklm podcast infographic voice mode commute 19 papers',
     label: 'LLM Paper Path (19 Papers)',
     category: 'AI & ML • Self-Study',
     route: 'blog',

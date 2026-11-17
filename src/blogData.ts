@@ -42,48 +42,48 @@ export const BLOG_POSTS: BlogPost[] = [
     date: 'November 2026',
     readTime: '4 min read + Paper Path',
     category: 'AI & ML',
-    tags: ['LLM Papers', 'AI Safety', 'Claude Duet', 'NotebookLM', 'Computer Use', 'Voice Mode', 'Agents', 'Evals'],
-    linkedinUrl: 'https://www.linkedin.com/in/amanguliani/recent-activity/all/',
-    authorNote: 'Crafted by carbon. Polished by silicon.',
+    tags: ['LLM Papers', 'AI Safety', 'Personal Agent', 'NotebookLM', 'Voice Mode', 'Agents', 'Evals'],
+    linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7528356379095502848/',
+    authorNote: 'Usual Disclaimer: Crafted by carbon(me). Polished by TPUs(Also named carbon 🤪)',
     embedComponent: 'paper-path',
     excerpt:
-      'Hacking my Bay Area commute into an AI seminar: how Claude Duet (with computer use) spins up NotebookLM podcasts, infographics, and voice-mode quizzes while I drive home—and why engineers must look one level under the hood.',
+      "Yesterday I got completely humbled by a voice bot while sitting in dead-stop traffic on 880. Here is how my personal agent running on my Mac at home + Google's NotebookLM turned my East Bay commute into an LLM paper gauntlet—and why going one layer deeper matters.",
     content: {
-      lead: 'Confession time: between leading engineering teams, tinkering with local agent harnesses, and raising a toddler, sitting quietly for two hours to chew through dense arXiv PDFs just isn\'t happening. What I do have plenty of, however, is a long Bay Area commute home from work—so I decided to hack that drive into a rolling CS seminar.',
+      lead: "Yesterday I got completely humbled by a voice bot while sitting in dead-stop traffic on 880. Honestly, leading AI work right now comes with a weird guilt: it is ridiculously easy to coast on prompts, harnesses, and high-level vibes—while quietly feeling your CS fundamentals get rusty underneath. I used to take pride in peeling the layers and looking under the hood on every framework I worked on, and yet this Alien Intelligence—and all the tricks that make it so good—remained a magic box for me.",
       sections: [
         {
-          heading: 'Hacking the Bay Area Commute (Claude Duet + NotebookLM + Voice Mode)',
+          heading: 'Hacking My Commute Home (Personal Mac Agent + NotebookLM + Voice Mode)',
           paragraphs: [
-            'Most days, the industry runs on "vibes-based AI engineering"—wrap an API key, stitch together a clever prompt, pray to the temperature gods, and ship. To get past the vibes, I started an AI-assisted study loop anchored around Claude Duet, my personal agent with computer use:',
+            'So how do I read multiple 40-page LaTeX PDFs with a full day at work and a toddler at home? Hack my commute home!!',
           ],
           bullets: [
-            '1. Claude Duet Preps the Material (Computer Use): Before I leave the office, Claude Duet takes the next paper on my reading path, drives NotebookLM in the browser to generate a podcast link and a quiz inside it, and builds a crisp visual infographic of the core mechanism.',
-            '2. Podcast on the Drive: I hit play on the NotebookLM audio during the long crawl down Highway 880/680 for first-pass intuition—just grasping the thesis and why the authors cared.',
-            '3. Voice-Mode Grilling While Driving: Here is the step that actually makes it stick. Listening to an AI podcast makes you feel smart for twenty minutes; switching into voice mode and letting the quiz grill you out loud in Bay Area traffic immediately exposes every concept you only thought you understood.',
+            "1. Prepping on My Mac at Home: Before I drive back, my personal agent running on my Mac at home grabs the next LLM paper on my list, opens Google's NotebookLM, generates a podcast link + quiz, and spits out an infographic.",
+            '2. Podcast + Voice-Mode Grilling on 880/680: I listen to the podcast on the drive down Highway 880/680, then switch to voice mode and let it grill me out loud in bumper-to-bumper traffic.',
+            '3. The Parking Lot Reality Check: Podcasts sometimes trick you into feeling smart. Trying to explain attention, LoRA, or DPO—and literally math equations—out loud while merging onto 880 exposes everything you only thought you understood, and often makes me look at the actual paper in the parking lot once I get back for all the stupid concepts I got wrong (basically I fail at the quiz I created myself LOL).',
           ],
           callout: {
             type: 'insight',
-            text: 'Listening to a podcast creates the illusion of competence. Getting quizzed out loud in voice mode on the drive home exposes every gap before you ever touch production.',
+            text: 'Podcasts trick you into feeling smart. Explaining attention, LoRA, or DPO math out loud while merging onto 880 exposes everything you only thought you understood.',
           },
         },
         {
-          heading: 'Why Engineers & Computer Scientists Need to Go One Level Deeper',
+          heading: 'Why Torture Myself? Going One Layer Deeper',
           paragraphs: [
-            'You don\'t need to hand-derive every matrix gradient from scratch to ship useful AI software—but treating LLMs as magic black boxes has a hard safety and reliability ceiling.',
+            'Well, as computer engineering leaders, we owe it to ourselves—and whoever relies on what we ship—to go at least one layer deeper into how these models actually work and where they break. That’s how we build a safer, less brittle AI future.',
             'Knowing why self-attention scales quadratically stops you from blindly dumping 100k-token repos into every prompt. Reading SWE-agent (#11) proves why agent-computer interfaces matter as much as raw model IQ. Seeing empirical proof that LLMs cannot self-correct without external ground truth (#16) stops you from building "agent reviews agent" echo chambers. And understanding semantic cache poisoning (#17) stops a latency shortcut from becoming a security vulnerability.',
-            'If we want to build a better-informed, safer AI future, engineers and computer scientists have to look at least one layer below the prompt.',
           ],
         },
         {
-          heading: 'My Living 19-Paper Path (6 Read, 13 Up Next)',
+          heading: 'My Living 19-Paper Path (6 Read, 13 Queued)',
           paragraphs: [
-            'I\'m 6 papers into a 19-paper reading list covering how LLMs work, alignment (DPO is up next!), tool-using agents, real-world benchmarks like SWE-bench and τ-bench, limits and security, and two training classics.',
-            'Instead of pretending I read all 19 over one heroic weekend, I\'m publishing the living list right below. Click any paper to expand its concept diagram, summary, and takeaway—and tell me what\'s missing from my queue.',
+            'For anyone wondering—I’m 6 papers into a 19-paper reading path (DPO next, 13 queued) and threw the living list + visuals right below. Click any paper to expand its infographic, summary, and takeaway.',
+            'Anyone else making time to go deep past the hype? If so, what’s one paper you would suggest that genuinely rewired how you build?',
+            '[Usual Disclaimer: Crafted by carbon(me). Polished by TPUs(Also named carbon 🤪) ]',
           ],
         },
       ],
       takeaways: [
-        'Hacking the Bay Area commute: Claude Duet (computer use) + NotebookLM podcasts + infographics + voice-mode quizzing turns dead drive time into active recall.',
+        "Hacking the commute home: a personal agent on my Mac at home + Google's NotebookLM podcast, infographic, and voice-mode quiz turns 880/680 traffic into active recall.",
         'Black-box prompting hits a wall; knowing attention, alignment, and benchmark mechanics directly improves system safety and harness design.',
         'Agent reliability (pass^k), ungrounded self-correction limits, and semantic cache poisoning are real production engineering problems—not abstract theory.',
       ],

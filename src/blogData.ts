@@ -74,9 +74,9 @@ export const BLOG_POSTS: BlogPost[] = [
           ],
         },
         {
-          heading: 'My Living 22-Paper Path (6 Read, 16 Queued)',
+          heading: 'My Living 22-Paper Path (7 Read, 15 Queued)',
           paragraphs: [
-            'For anyone wondering—I’m 6 papers into a 22-paper reading path (DPO next, 16 queued) and threw the living list + visuals right below. Click any paper to expand its infographic, summary, and takeaway.',
+            'For anyone wondering—I’m 7 papers into a 22-paper reading path (ReAct next, 15 queued) and threw the living list + visuals right below. Click any paper to expand its infographic, summary, and takeaway.',
             'Anyone else making time to go deep past the hype? If so, what’s one paper you would suggest that genuinely rewired how you build?',
             '[Usual Disclaimer: Crafted by carbon(me). Polished by TPUs(Also named carbon 🤪) ]',
           ],

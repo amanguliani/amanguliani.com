@@ -154,8 +154,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
     title: 'Direct Preference Optimization (DPO)',
     arxivId: '2305.18290',
     topic: 'Adapting and aligning',
-    status: 'up-next',
-    isNextInQueue: true,
+    status: 'read',
     summary:
       'Skips the separate reward model and reinforcement-learning loop of RLHF. It trains directly on pairs of preferred and rejected answers with one simple loss, matching RLHF while being simpler and more stable.',
     diagramKey: 'dpo',
@@ -170,6 +169,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
     arxivId: '2210.03629',
     topic: 'Agents',
     status: 'up-next',
+    isNextInQueue: true,
     summary:
       'The model alternates between thinking out loud and taking an action like a search, then reads the result before its next step. Its reasoning stays grounded in real facts and is easy to follow.',
     diagramKey: 'react',

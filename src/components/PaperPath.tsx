@@ -36,10 +36,15 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
   const counts = useMemo(() => {
     const read = PAPER_PATH_ENTRIES.filter((p) => p.status === 'read').length;
     const upNext = PAPER_PATH_ENTRIES.filter((p) => p.status === 'up-next').length;
+    const nextPaper =
+      PAPER_PATH_ENTRIES.find((p) => p.isNextInQueue) ??
+      PAPER_PATH_ENTRIES.find((p) => p.status === 'up-next');
+    const nextPaperLabel = nextPaper ? nextPaper.title.split(':')[0] : null;
     return {
       total: PAPER_PATH_ENTRIES.length,
       read,
       upNext,
+      nextPaperLabel,
     };
   }, []);
 
@@ -194,7 +199,8 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
           </span>
           <span className="stat-item">
             <span className="stat-dot dot-up-next" aria-hidden="true" />
-            Up Next ({counts.upNext} · Next: DPO)
+            Up Next ({counts.upNext}
+            {counts.nextPaperLabel ? ` · Next: ${counts.nextPaperLabel}` : ''})
           </span>
         </div>
 

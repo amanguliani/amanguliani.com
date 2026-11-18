@@ -71,8 +71,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     icon: '🚀',
   },
   {
-    text: 'l6 engineering manager google enterprise ai foundations support platforms mcp servicenow cloud spanner kafka pubsub hyderabad sydney sf bay area ai summit',
-    label: 'Google — L6 Engineering Manager (Enterprise AI & Support)',
+    text: 'engineering manager dri google enterprise ai foundations support platforms context intelligence three teams promoted senior staff team lead manager mcp servicenow cloud spanner kafka pubsub hyderabad sydney sf bay area ai summit',
+    label: 'Google — Engineering Manager · DRI, Enterprise AI Foundations & Support Platforms',
     category: 'Resume',
     route: 'resume',
     icon: '💼',

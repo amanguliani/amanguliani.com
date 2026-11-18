@@ -26,17 +26,18 @@ const EXPERIENCE_ITEMS: ExperienceItem[] = [
     ],
   },
   {
-    role: 'L6 Engineering Manager — Enterprise AI & Support Platforms',
+    role: 'Engineering Manager · DRI, Enterprise AI Foundations & Support Platforms',
     org: 'Enterprise Infrastructure & Support Technology, Google • SF Bay Area',
-    date: 'September 2019 — Present',
+    date: 'September 2019 — Present · Sr. Software Engineer → Team Lead Manager (2021) → Engineering Manager (2023)',
     icon: 'briefcase',
     bullets: [
-      "Lead 8 direct reports across the US, Hyderabad and Sydney, and own the strategy, roadmap and delivery for Google's agentic support, context intelligence and fleet platforms.",
-      "Own the AI engineering roadmap through 2027 and its operating model (RACI, 2-week sprints, 70/20/10 capacity split). Brought domain agents under one multi-agent framework with least-privilege security. Co-presented at Google's AI Engineering Summit.",
+      "Lead an org of three teams (three managers, including my own team) across the US, Hyderabad and Sydney, and own the strategy, roadmap and delivery for Google's agentic support, context intelligence and fleet platforms.",
+      'Grow leaders: promoted 6+ engineers to senior and staff roles in about three years as a manager, and manage underperformance directly.',
+      "Own the AI engineering roadmap through 2027 and the operating model across all three teams (RACI, 2-week sprints, 70/20/10 capacity split). Brought domain agents under one multi-agent framework with least-privilege security. Co-presented at Google's AI Engineering Summit.",
       'Building an agentic support system that turns personalized support insights into on-device actions through MCP, targeting a 40% cut in support volume by end of 2026.',
       'Retired the legacy support platform across 4,150+ users and 227 feature flags (88.2%+ parity). Moved real-time AI anomaly detection to 100% of production traffic.',
       'Leading the move from an in-house ticketing system to ServiceNow, with real-time replication into Cloud Spanner over Kafka Connect and Pub/Sub for live analytics.',
-      'Run systems for 35,000+ Google Meet Hardware and Google Beam rooms and retired all of the legacy fleet consoles. As Tech Lead, built an ML health and auto-repair pipeline that raised fleet reliability from 68% to 89% in a year.',
+      'Run systems for 35,000+ Google Meet Hardware and Google Beam rooms and retired all of the legacy fleet consoles. Earlier, as tech lead, built an ML health and auto-repair pipeline that raised fleet reliability from 68% to 89% in a year.',
     ],
   },
   {
@@ -138,13 +139,13 @@ const Resume = () => {
     <div className="resume-container animate-fade-in">
       <div className="resume-header">
         <h2 className="text-gradient">Aman Guliani</h2>
-        <p className="resume-role-subtitle">Engineering Lead @ Google</p>
+        <p className="resume-role-subtitle">Engineering Leader @ Google</p>
         <p className="resume-summary">
-          Engineering Manager at Google leading the Enterprise AI Foundations and Support
-          Intelligence platforms, with a team across the US, Hyderabad and Sydney. Builds agentic
-          AI systems, real-time data pipelines and large platform migrations, up to a fleet of
-          35,000+ enterprise devices. Earlier, a founding team member of AWS Migration Hub and a
-          manager on Amazon&apos;s global shipment APIs.
+          Engineering leader at Google and DRI for Enterprise AI Foundations, an org of three
+          teams across the US, Hyderabad and Sydney. Leads agentic AI systems, real-time data
+          pipelines and large platform migrations, up to a fleet of 35,000+ enterprise devices,
+          and has promoted 6+ engineers to senior and staff roles. Earlier, a founding team
+          member of AWS Migration Hub and a manager on Amazon&apos;s global shipment APIs.
         </p>
         <div className="social-links">
           <a href="https://www.linkedin.com/in/amanguliani" target="_blank" rel="noopener noreferrer">

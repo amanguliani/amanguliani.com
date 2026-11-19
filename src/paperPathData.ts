@@ -168,8 +168,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
     title: 'ReAct: Synergizing Reasoning and Acting',
     arxivId: '2210.03629',
     topic: 'Agents',
-    status: 'up-next',
-    isNextInQueue: true,
+    status: 'read',
     summary:
       'The model alternates between thinking out loud and taking an action like a search, then reads the result before its next step. Its reasoning stays grounded in real facts and is easy to follow.',
     diagramKey: 'react',
@@ -184,6 +183,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
     arxivId: '2302.04761',
     topic: 'Agents',
     status: 'up-next',
+    isNextInQueue: true,
     summary:
       'The model teaches itself when to call a calculator, search or calendar by keeping only the calls that actually helped it predict the next words. A small model with tools beat much bigger models on math and facts.',
     diagramKey: 'toolformer',

@@ -98,17 +98,22 @@ const PaperPath = ({ highlightedPaperNumber = null }: PaperPathProps) => {
             </span>
             <span className="paper-item-title">{paper.title}</span>
           </span>
-          <span
-            className={`paper-status-badge status-${paper.status} ${
-              paper.isNextInQueue ? 'is-next-queue' : ''
-            }`}
-          >
-            {paper.status === 'read' ? (
-              <CheckCircle2 size={12} aria-hidden="true" />
-            ) : (
-              <Clock size={12} aria-hidden="true" />
+          <span className="paper-badges">
+            {paper.isOptional && (
+              <span className="paper-optional-badge">Optional</span>
             )}
-            <span>{statusLabel}</span>
+            <span
+              className={`paper-status-badge status-${paper.status} ${
+                paper.isNextInQueue ? 'is-next-queue' : ''
+              }`}
+            >
+              {paper.status === 'read' ? (
+                <CheckCircle2 size={12} aria-hidden="true" />
+              ) : (
+                <Clock size={12} aria-hidden="true" />
+              )}
+              <span>{statusLabel}</span>
+            </span>
           </span>
         </summary>
 

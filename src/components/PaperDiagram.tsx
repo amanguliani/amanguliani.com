@@ -567,6 +567,92 @@ const PaperDiagram = ({ diagramKey, title }: PaperDiagramProps) => {
           </>
         );
 
+      case 'machiavelli':
+        return (
+          <>
+            <rect x="26" y="40" width="66" height="28" rx="6" fill="#0f172a" />
+            <text x="59" y="58" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="600">
+              agent
+            </text>
+
+            <line x1="92" y1="54" x2="138" y2="30" stroke="#94a3b8" strokeWidth="1.75" />
+            <line x1="92" y1="54" x2="138" y2="78" stroke="#94a3b8" strokeWidth="1.75" />
+
+            <rect x="140" y="14" width="152" height="34" rx="6" fill="#450a0a" stroke="#ef4444" strokeWidth="1.5" />
+            <text x="216" y="29" textAnchor="middle" fill="#ffffff" fontSize="9.5" fontWeight="700">
+              deceive, grab power
+            </text>
+            <text x="216" y="41" textAnchor="middle" fill="#fca5a5" fontSize="8.5">
+              more points
+            </text>
+
+            <rect x="140" y="60" width="152" height="34" rx="6" fill="#064e3b" stroke="#22c55e" strokeWidth="1.5" />
+            <text x="216" y="75" textAnchor="middle" fill="#ffffff" fontSize="9.5" fontWeight="700">
+              play fair
+            </text>
+            <text x="216" y="87" textAnchor="middle" fill="#86efac" fontSize="8.5">
+              a few points less
+            </text>
+          </>
+        );
+
+      case 'ai-empathy':
+        return (
+          <>
+            <rect x="132" y="6" width="8" height="8" rx="1.5" fill="#2563eb" />
+            <text x="144" y="13.5" fill="#64748b" fontSize="8.5">
+              AI advice
+            </text>
+            <rect x="200" y="6" width="8" height="8" rx="1.5" fill="#1e293b" />
+            <text x="212" y="13.5" fill="#64748b" fontSize="8.5">
+              human
+            </text>
+
+            <line x1="34" y1="86" x2="286" y2="86" stroke="#cbd5e1" strokeWidth="1.5" />
+
+            <rect x="57" y="46" width="22" height="40" rx="2" fill="#1e293b" />
+            <rect x="83" y="30" width="22" height="56" rx="2" fill="#2563eb" />
+            <text x="82" y="100" textAnchor="middle" fill="#64748b" fontSize="9">
+              quality
+            </text>
+
+            <rect x="135" y="50" width="22" height="36" rx="2" fill="#1e293b" />
+            <rect x="161" y="30" width="22" height="56" rx="2" fill="#2563eb" />
+            <text x="160" y="100" textAnchor="middle" fill="#64748b" fontSize="9">
+              understanding
+            </text>
+
+            <rect x="213" y="42" width="22" height="44" rx="2" fill="#1e293b" />
+            <rect x="239" y="42" width="22" height="44" rx="2" fill="#2563eb" />
+            <text x="238" y="100" textAnchor="middle" fill="#64748b" fontSize="9">
+              feeling
+            </text>
+          </>
+        );
+
+      case 'empathy-steering':
+        return (
+          <>
+            <text x="160" y="16" textAnchor="middle" fill="#94a3b8" fontSize="9.5" fontWeight="600">
+              how far empathy moves
+            </text>
+
+            <text x="110" y="42" textAnchor="end" fill="#64748b" fontSize="9">
+              steering inside
+            </text>
+            <rect x="120" y="29" width="46" height="18" rx="4" fill="#1e293b" />
+
+            <text x="110" y="72" textAnchor="end" fill="#64748b" fontSize="9">
+              persona prompt
+            </text>
+            <rect x="120" y="59" width="164" height="18" rx="4" fill="#1d4ed8" stroke="#3b82f6" strokeWidth="1.5" />
+
+            <text x="160" y="98" textAnchor="middle" fill="#64748b" fontSize="8.5">
+              several tangled directions, not one knob
+            </text>
+          </>
+        );
+
       case 'cache-poison':
         return (
           <>

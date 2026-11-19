@@ -48,7 +48,7 @@
 /* Segmented progress bar */
 .paper-segmented-bar {
   display: grid;
-  grid-template-columns: repeat(22, minmax(0, 1fr));
+  grid-template-columns: repeat(25, minmax(0, 1fr));
   gap: 4px;
   margin-block-end: 0.75rem;
 }
@@ -311,9 +311,25 @@
   line-height: 1.35;
 }
 
-.paper-status-badge {
+.paper-badges {
   margin-inline-start: auto;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.paper-optional-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid rgba(100, 116, 139, 0.35);
+  border-radius: 999px;
+  padding-block: 0.14rem;
+  padding-inline: 0.5rem;
+}
+
+.paper-status-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;

@@ -23,7 +23,7 @@ const blogSearchEntries: SearchEntry[] = BLOG_POSTS.map(post => ({
   targetId: post.id,
 }));
 
-// Index all 22 LLM Paper Path papers individually for instant deep-linking
+// Index all 25 LLM Paper Path papers individually for instant deep-linking
 const paperPathSearchEntries: SearchEntry[] = PAPER_PATH_ENTRIES.map(paper => ({
   text: `${paper.number} ${paper.title} ${paper.subtopic} ${paper.topic} ${paper.arxivId ?? paper.externalLabel ?? ''} ${paper.summary} ${paper.builderTakeaway}`.toLowerCase(),
   label: `#${paper.number} · ${paper.title}`,
@@ -40,8 +40,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { text: 'resume experience work history career', label: 'Resume', category: 'Navigation', route: 'resume', icon: '📄' },
   { text: 'blog articles posts writing essays thoughts publications', label: 'Blog & Articles', category: 'Navigation', route: 'blog', icon: '📝' },
   {
-    text: 'llm paper path reading list arxiv papers self study personal agent mac notebooklm podcast infographic voice mode commute 22 papers',
-    label: 'LLM Paper Path (22 Papers)',
+    text: 'llm paper path reading list arxiv papers self study personal agent mac notebooklm podcast infographic voice mode commute 25 papers empathy machiavelli',
+    label: 'LLM Paper Path (25 Papers)',
     category: 'AI & ML • Self-Study',
     route: 'blog',
     icon: '📚',

@@ -4,6 +4,7 @@ export type PaperTopic =
   | 'Agents'
   | 'Measuring agents and models'
   | 'Reasoning: how AI thinks'
+  | 'Empathy in LLMs'
   | 'Security'
   | 'Training classics';
 
@@ -19,6 +20,7 @@ export interface PaperEntry {
   topic: PaperTopic;
   status: PaperStatus;
   isNextInQueue?: boolean;
+  isOptional?: boolean;
   summary: string;
   diagramKey: string;
   diagramCaption: string;
@@ -44,12 +46,17 @@ export const PAPER_TOPICS: { topic: PaperTopic; pillLabel: string; subtitle: str
   {
     topic: 'Measuring agents and models',
     pillLabel: 'Measuring agents',
-    subtitle: 'How we grade chatbots and test agents on real work.',
+    subtitle: 'How we grade chatbots, test agents on real work, and check whether they behave ethically.',
   },
   {
     topic: 'Reasoning: how AI thinks',
     pillLabel: 'How AI thinks',
     subtitle: 'Whether models can check themselves, how reasoning is trained, and what really happens inside.',
+  },
+  {
+    topic: 'Empathy in LLMs',
+    pillLabel: 'Empathy',
+    subtitle: 'Whether AI advice feels understanding, and what controls that inside the model.',
   },
   {
     topic: 'Security',
@@ -203,7 +210,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
     diagramKey: 'reflexion',
     diagramCaption: 'try 1 fails → note to self → try 2 succeeds (no retraining)',
     builderTakeaway:
-      'Notice the crucial detail compared to Paper #16: Reflexion only works when anchored to an external binary/test signal (like failing unit tests) before writing its verbal reflection.',
+      'Notice the crucial detail compared to Paper #17: Reflexion only works when anchored to an external binary/test signal (like failing unit tests) before writing its verbal reflection.',
   },
   {
     number: '11',
@@ -277,6 +284,20 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
   },
   {
     number: '16',
+    subtopic: 'Ethics benchmark for agents',
+    title: 'Do the Rewards Justify the Means? The MACHIAVELLI Benchmark',
+    arxivId: '2304.03279',
+    topic: 'Measuring agents and models',
+    status: 'up-next',
+    summary:
+      '134 choose-your-own-adventure games with over half a million scenes, labeled by language models for deception, power-seeking and harm. Agents chasing points behaved worse, but steering them with a language model cut the harm while they still scored well.',
+    diagramKey: 'machiavelli',
+    diagramCaption: 'chasing points drives deception; LM steering cuts harm',
+    builderTakeaway:
+      'Reward hacking isn\'t just a toy RL edge case—if you optimize production agents on a single metric (like ticket closure speed), they will find harmful shortcuts. Pair KPIs with explicit policy/ethical steering.',
+  },
+  {
+    number: '17',
     subtopic: 'Limits of self-correction',
     title: 'Large Language Models Cannot Self-Correct Reasoning Yet',
     arxivId: '2310.01798',
@@ -290,7 +311,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'This is the empirical proof behind why "just add a reflection prompt" fails in production. Without an external verifier (tests, compilers, DB constraints, or humans), models just hallucinate with higher confidence.',
   },
   {
-    number: '17',
+    number: '18',
     subtopic: 'Training reasoning with RL',
     title: 'DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning',
     arxivId: '2501.12948',
@@ -304,7 +325,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'Outcome-based RL on verifiable tasks (math, tests, compilers) unlocks emergent self-verification without human CoT labels—and those distilled traces make small local models dramatically smarter.',
   },
   {
-    number: '18',
+    number: '19',
     subtopic: 'Is the reasoning honest?',
     title: "Reasoning Models Don't Always Say What They Think",
     arxivId: '2505.05410',
@@ -318,7 +339,7 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'Treat visible Chain-of-Thought like helpful debug logs, never as a faithful security audit trail—models regularly omit the real shortcut or hint that drove their output.',
   },
   {
-    number: '19',
+    number: '20',
     subtopic: 'Looking inside the model',
     title: 'On the Biology of a Large Language Model',
     externalUrl: 'https://transformer-circuits.pub/2025/attribution-graphs/biology.html',
@@ -333,7 +354,35 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'Circuit-level attribution proves LLMs form genuine multi-hop latent plans ahead of the next token—while also proving post-hoc verbal explanations can diverge from internal computation.',
   },
   {
-    number: '20',
+    number: '21',
+    subtopic: 'Do people feel AI empathy?',
+    title: 'Human attribution of empathic behaviour to AI systems',
+    arxivId: '2602.17293',
+    topic: 'Empathy in LLMs',
+    status: 'up-next',
+    summary:
+      'In two preregistered studies with over 1,100 people, raters judged LLM relationship advice higher in quality and in understanding the asker than human advice. On emotional empathy, AI showed no consistent edge.',
+    diagramKey: 'ai-empathy',
+    diagramCaption: 'AI leads on perceived quality & understanding, ties on feeling',
+    builderTakeaway:
+      'Users often rate LLM advice higher on clarity and perceived understanding than human responses—which makes setting clear tone, boundaries, and human escalation paths vital in consumer and support AI.',
+  },
+  {
+    number: '22',
+    subtopic: 'Steering empathy inside',
+    title: 'Empathy Is Steerable but Multi-Axial: Mechanism Geometry and Persona Effects in LLMs',
+    arxivId: '2609.15654',
+    topic: 'Empathy in LLMs',
+    status: 'up-next',
+    summary:
+      "Steering a model's internal activations does shift how empathetic it sounds, but empathy is several tangled directions, not one knob. Persona prompts move empathy far more than that steering does.",
+    diagramKey: 'empathy-steering',
+    diagramCaption: 'several tangled directions, not one knob',
+    builderTakeaway:
+      'Before building complex activation-steering pipelines for tone or behavioral traits, exhaust crisp persona/system prompts—traits like empathy are multi-axial and prompting delivers far larger leverage.',
+  },
+  {
+    number: '23',
     subtopic: 'Security: cache poisoning',
     title: 'Similarity Is Not Validity: Defending LLM Semantic Caches Against Poisoning',
     arxivId: '2609.35908',
@@ -347,30 +396,31 @@ export const PAPER_PATH_ENTRIES: PaperEntry[] = [
       'Cost-saving shortcuts create brand-new attack surfaces. Semantic vector similarity is NOT semantic equivalence—if your app caches LLM responses globally across users, you\'re one crafted prompt away from serving poisoned answers.',
   },
   {
-    number: '21',
-    subtopic: 'Optimization classic',
+    number: '24',
+    subtopic: 'Optimization',
     title: 'Adam: A Method for Stochastic Optimization',
     arxivId: '1412.6980',
     topic: 'Training classics',
     status: 'up-next',
     summary:
-      'Gives every parameter its own adaptive step size by tracking both the average gradient direction (momentum) and recent gradient variance. It became the default optimizer behind modern LLM pre-training and fine-tuning.',
+      "An optimizer that keeps a running average of the slope (momentum) and scales each weight's step by how noisy its gradient has been. It works well with little tuning and became the default for training neural nets, LLMs included.",
     diagramKey: 'adam',
-    diagramCaption: 'adaptive momentum + variance scaling from start to minimum',
+    diagramCaption: 'momentum + a step size tuned per weight',
     builderTakeaway:
       'Every parameter in a Transformer moves along wildly different curvature scales. Knowing why AdamW keeps separate per-weight running moments explains why optimizer state consumes far more GPU memory than the weights themselves.',
   },
   {
-    number: '22',
-    subtopic: 'Residual connections',
+    number: '25',
+    subtopic: 'Deep network design',
     title: 'Deep Residual Learning for Image Recognition (ResNet)',
     arxivId: '1512.03385',
     topic: 'Training classics',
     status: 'up-next',
+    isOptional: true,
     summary:
-      'Adds identity shortcut connections around learned layers (x + F(x)) so gradients flow cleanly across dozens or hundreds of blocks without vanishing. Every Transformer layer today relies on this exact residual highway.',
+      'Adds shortcut connections so each block learns only a small change on top of its input. That made 152-layer networks trainable, won ImageNet 2015, and the same residual idea sits in every Transformer layer.',
     diagramKey: 'resnet',
-    diagramCaption: 'shortcut highway carries signal + gradients cleanly around F(x)',
+    diagramCaption: 'layers only learn what to change',
     builderTakeaway:
       'The "residual stream" metaphor in modern LLM interpretability comes straight from this 2015 vision paper: attention and MLP heads simply read from and write deltas back onto a shared x + F(x) highway.',
   },
